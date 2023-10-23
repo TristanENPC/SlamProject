@@ -1,3 +1,5 @@
+# TDLOG project - Roquefort Filomène - Salaün Amandine - Lagu Edouard - Riou Tristan
+
 import grid
 import player
 import question

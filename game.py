@@ -30,7 +30,7 @@ def init_words(repert):
     for i in range(len(contents)):
         contents[i] = contents[i].strip()
         contents[i] = contents[i].split(' - ')
-        list_words.append(grid.Word(contents[i][0],contents[i][1],0))
+        list_words.append(grid.Word(contents[i][0],contents[i][1]))
 
     return list_words
 
@@ -59,3 +59,6 @@ class Game():
 
 questions = init_questions('questions.txt')
 words = init_words('mots.txt')
+G = grid.Grid(10,10)
+G.generate(words)
+G.display()

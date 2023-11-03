@@ -2,6 +2,7 @@ class Player():
     def __init__(self,name0):
         self._name = name0
         self._is_playing = True
+        self._points = 0
 
     @property
     def name(self):

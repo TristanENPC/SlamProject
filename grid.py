@@ -1,7 +1,7 @@
 import numpy as np
 
 class Word():
-    def __init__(self,name0,definition0,first_letter_position0):
+    def __init__(self,name0,definition0):
         '''
         name0 : str
         definition0 : str
@@ -12,7 +12,7 @@ class Word():
         self._is_horizontal = True
         self._is_vertical = False
         self._length = len(name0)
-        self._first_letter_position = first_letter_position0
+        self._first_letter_position = (0,0)
 
     @property
     def name(self):
@@ -30,20 +30,28 @@ class Word():
     def is_vertical(self):
         return self._is_vertical
 
+    @property
+    def first_letter_position(self):
+        return self._first_letter_position
+
+    @first_letter_position.setter
+    def first_letter_position(self,v):
+        self._first_letter_position = v
+
     def change_orientation(self):
         transition = self._is_horizontal
         self._is_horizontal = self._is_vertical
         self._is_vertical = transition
 
-    def where(self):
-        '''
-        It returns the place occupied by the word according to its first letter position and its orientation
-        It is returned in a tuple to make the slicing on numpy array easy
-        '''
-        if self._is_horizontal :
-            return (self._first_letter_position[0],self._first_letter_position[0]+1,self._first_letter_position[1],self._first_letter_position[1]+self._length)
-        else :
-            return (self._first_letter_position[0],self._first_letter_position[0]+self._length ,self._first_letter_position[1],self._first_letter_position[1]+1)
+    def set_horizontal(self):
+        self._is_horizontal = True
+        self._is_vertical = False
+
+    def set_vertical(self):
+        self._is_horizontal = False
+        self._is_vertical = True
+
+
 
 
 class Grid():
@@ -58,6 +66,210 @@ class Grid():
     @property
     def words(self):
         return self._words
+
+    def display(self):
+        '''
+        It displays the grid which is an array as a str message to ease the vizualisation.
+        '''
+        line_string = ''
+        n,m = self.table.shape
+        for i in range(n):
+            for j in range(m):
+                if self.table[i,j] == None :
+                    line_string += ' '
+                else :
+                    line_string += self.table[i,j]
+                line_string += ' '
+            print(line_string)
+            line_string = ''
+
+    def check_word_fits_in_grid_and_place_it(self,word,tuple_position):
+        '''
+        This function has three goals. The first is to check if the given word can be in the grid with a connection with the letter in position tuple_position in the grid. The second is to place the word in the grid if this word can integer the grid. The third is to return the position of the letter shared in the word. For example let's consider a 5x5 grid with in the left-top corner the word "tree" in horizontal position, if we give to this function the word "run" and the tuple_position (0,1) it will return "(True,0)" and it will place the word "run" behind the word "tree" the both sharing the same "r".
+        Be carreful, the "word" argument is an objet from the class "Word" so it has its own position (vertical or horizontal), the checking will be effectif uniquely with the position assignated to the word. It doesn't check the both.
+        '''
+        both_letter = self.table[tuple_position]
+        index_letter = word.name.index(both_letter)
+        letters_before = [word.name[i] for i in range(len(word.name)) if i<index_letter]
+        letters_after = [word.name[i] for i in range(len(word.name)) if i>index_letter]
+
+        if word.is_horizontal :
+
+            for k in range(1,len(letters_before)+1):
+                if (tuple_position[1]-k < 0) or (self.table[tuple_position[0],tuple_position[1]-k] != None and self.table[tuple_position[0],tuple_position[1]-k] != letters_before[-k]) or (tuple_position[0]-1 >= 0 and self.table[tuple_position[0]-1,tuple_position[1]-k] != None and self.table[tuple_position[0],tuple_position[1]-k] != letters_before[-k]) or (tuple_position[0]+1 < self.table.shape[0] and self.table[tuple_position[0]+1,tuple_position[1]-k] != None and self.table[tuple_position[0],tuple_position[1]-k] != letters_before[-k]) :
+                    return (False,index_letter)
+
+            if (tuple_position[1]-len(letters_before)-1 >= 0) and (self.table[tuple_position[0],tuple_position[1]-len(letters_before)-1] != None) and (len(letters_before) != 0 and self.table[tuple_position[0],tuple_position[1]-len(letters_before)-1] != letters_before[0]) :
+                return (False,index_letter)
+
+            for k in range(len(letters_after)):
+                if (tuple_position[1]+k+1 >= self.table.shape[1]) or (self.table[tuple_position[0],tuple_position[1]+k+1] != None and self.table[tuple_position[0],tuple_position[1]+k+1] != letters_after[k]) or (tuple_position[0]-1 >= 0 and self.table[tuple_position[0]-1,tuple_position[1]+k+1] != None and self.table[tuple_position[0],tuple_position[1]+k+1] != letters_after[k]) or (tuple_position[0]+1 < self.table.shape[0] and self.table[tuple_position[0]+1,tuple_position[1]+k+1] != None and self.table[tuple_position[0],tuple_position[1]+k+1] != letters_after[k]) :
+                    return (False,index_letter)
+
+            if (tuple_position[1]+len(letters_after)+1 < self.table.shape[1]) and (self.table[tuple_position[0],tuple_position[1]+len(letters_after)+1] != None) and (len(letters_after) != 0 and self.table[tuple_position[0],tuple_position[1]+len(letters_after)+1] != letters_after[-1]) :
+                return (False,index_letter)
+
+            if (len(letters_before) == 0) and (tuple_position[1]-1 >= 0) and (tuple_position[1]-1 != None):
+                return (False,index_letter)
+
+            for k in range(1,len(letters_before)+1):
+                self.table[tuple_position[0],tuple_position[1]-k] = letters_before[-k]
+
+            for k in range(len(letters_after)):
+                self.table[tuple_position[0],tuple_position[1]+k+1] = letters_after[k]
+
+        else :
+
+            for k in range(1,len(letters_before)+1):
+                if (tuple_position[0]-k < 0) or (self.table[tuple_position[0]-k,tuple_position[1]] != None and self.table[tuple_position[0]-k,tuple_position[1]] != letters_before[-k]) or (tuple_position[1]-1 >= 0 and self.table[tuple_position[0]-k,tuple_position[1]-1] != None and self.table[tuple_position[0]-k,tuple_position[1]] != letters_before[-k]) or (tuple_position[1]+1 < self.table.shape[1] and self.table[tuple_position[0]-k,tuple_position[1]+1] != None and self.table[tuple_position[0]-k,tuple_position[1]] != letters_before[-k]) :
+                    return (False,index_letter)
+
+            if (tuple_position[0]-len(letters_before)-1 >= 0) and (self.table[tuple_position[0]-len(letters_before)-1,tuple_position[1]] != None) and (len(letters_before) != 0 and self.table[tuple_position[0]-len(letters_before)-1,tuple_position[1]] != letters_before[0]) :
+                return (False,index_letter)
+
+            for k in range(len(letters_after)):
+                if (tuple_position[0]+k+1 >= self.table.shape[0]) or (self.table[tuple_position[0]+k+1,tuple_position[1]] != None and self.table[tuple_position[0]+k+1,tuple_position[1]] != letters_after[k]) or (tuple_position[1]-1 >= 0 and self.table[tuple_position[0]+k+1,tuple_position[1]-1] != None and self.table[tuple_position[0]+k+1,tuple_position[1]] != letters_after[k]) or (tuple_position[1]+1 < self.table.shape[1] and self.table[tuple_position[0]+k+1,tuple_position[1]+1] != None and self.table[tuple_position[0]+k+1,tuple_position[1]] != letters_after[k]) :
+                    return (False,index_letter)
+
+            if (tuple_position[0]+len(letters_after)+1 < self.table.shape[0]) and (self.table[tuple_position[0]+len(letters_after)+1,tuple_position[1]] != None) and (len(letters_after) != 0 and self.table[tuple_position[0]+len(letters_after)+1,tuple_position[1]] != letters_after[-1]) :
+                return (False,index_letter)
+
+            if (len(letters_before) == 0) and (tuple_position[0]-1 >= 0) and (tuple_position[0]-1 != None):
+                return (False,index_letter)
+
+            for k in range(1,len(letters_before)+1):
+                self.table[tuple_position[0]-k,tuple_position[1]] = letters_before[-k]
+
+            for k in range(len(letters_after)):
+                self.table[tuple_position[0]+k+1,tuple_position[1]] = letters_after[k]
+
+        return (True,index_letter)
+
+
+
+    def generate(self,words_list):
+        '''
+        It generates an available grid with the words from words_list which means it modifies the table attribute from the grid object which is initially full of "None" with 10 words placed according the logical rules of a Slam grid. The generation is based on random so it can fail, if it occurs the methods will return a message "Error generation".
+        '''
+        current_word = Word(' ',' ')
+
+        # We search a word which has more than 6 letters fitting with the size of the grid, to be the first word
+        while len(current_word.name) < 7 or len(current_word.name) >= self.table.shape[1]:
+            random_variable = np.random.randint(len(words_list))
+            current_word = words_list[random_variable]
+
+        # This word will not appear another time in the grid
+        words_list.pop(random_variable)
+
+        # We place it in the grid horizontaly with (0,0) for the coordinate of the first letter
+        for j in range(len(current_word.name)):
+            self.table[0,j] = current_word.name[j]
+
+        current_word.first_letter_position = (0,0)
+        self.words.append(current_word)
+
+        # We use a list of numbers to choice the shared letter in the two words
+        # If this letter doesn't match with all the words in the words_list we can pop it from the list and try another one
+        # So the number_of_index_letters is the remaining available letters to test
+        available_index_letters = [i for i in range(len(current_word.name))]
+        number_of_index_letters = len(current_word.name)
+
+        # Same trick here but for the availables words which could fit with the current one
+        available_index_words = []
+        number_of_index_words = 0
+
+        # If all the letters of the current word don't allow us to put an other word in the grid
+        # We want to try with the previous one placed in the grid so we have to stock this information
+        index_in_grids_words = 1
+        # Later, it will take the result of check_word_fits_in_grid_and_place_it
+        binary = False
+
+        # This variable has been created to avoid the following problem : I place horizontally the word "foot". The random choices to find if the word "boat" match with the word "foot" by the letter "t". The answer is positive and so it places it vertically ending with the t shared with "foot". Now same thing for "television" with "boat" by the letter "t". The answer is also positive and now we have the word footelevision which is not correct. To avoid this problem we want to stock the shared position of two placed words.
+        problematic_position = -1
+
+        while len(self.words) < 9 :    # We can change the 9 with an other number to have more or less words in the grid
+
+            index_in_grids_words = len(self.words)
+
+            while (not binary) and (index_in_grids_words > -1) : # While we haven't placed an other word and it remains words to test in the grid
+
+                index_in_grids_words -= 1
+                available_index_letters = [i for i in range(len(self.words[index_in_grids_words].name))]
+                if index_in_grids_words == len(self.words)-1:
+                    available_index_letters.pop(problematic_position)
+                number_of_index_letters = len(available_index_letters)
+
+                while (not binary) and (number_of_index_letters > 0) : # While we haven't placed an other word and it remains letters to test in the word
+
+                    available_words = []
+                    words_already_tried = []
+
+                    a = np.random.randint(number_of_index_letters)
+                    c = available_index_letters.pop(a)
+                    number_of_index_letters -= 1
+
+                    for i in range(len(words_list)):
+                        if self.words[index_in_grids_words].name[c] in words_list[i].name :
+                            available_words.append(words_list[i])
+
+                    available_index_words = [i for i in range(len(available_words))]
+                    number_of_index_words = len(available_words)
+
+                    while (not binary) and (len(available_words) != len(words_already_tried)) : # While we haven't placed an other word and it remains words to test in the words_list which have a shared letter with the word in the grid
+
+                        b = np.random.randint(number_of_index_words)
+                        d = available_index_words[b]
+                        current_word = available_words[d]
+
+                        words_already_tried.append(current_word)
+                        available_index_words.pop(b)
+                        number_of_index_words -= 1
+
+                        if self.words[index_in_grids_words].is_horizontal :
+                            current_word.set_vertical()
+                        else :
+                            current_word.set_horizontal()
+
+                        if current_word.is_horizontal :
+                            binary,problematic_position = self.check_word_fits_in_grid_and_place_it(current_word,(self.words[index_in_grids_words].first_letter_position[0]+c,self.words[index_in_grids_words].first_letter_position[1]))
+
+                            current_word.first_letter_position = (self.words[index_in_grids_words].first_letter_position[0]+c,self.words[index_in_grids_words].first_letter_position[1]-(current_word.name.index(self.words[index_in_grids_words].name[c])))
+                        else :
+                            binary,problematic_position = self.check_word_fits_in_grid_and_place_it(current_word,(self.words[index_in_grids_words].first_letter_position[0],self.words[index_in_grids_words].first_letter_position[1]+c))
+
+                            current_word.first_letter_position = (self.words[index_in_grids_words].first_letter_position[0]-(current_word.name.index(self.words[index_in_grids_words].name[c])),self.words[index_in_grids_words].first_letter_position[1]+c)
+
+            if not binary :
+                print('Grid generation failed')
+                return None
+
+            else :
+                binary = False
+                self.words.append(current_word)
+                words_list.remove(current_word)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,10 +1,66 @@
-Ethere - D'une nature legere, delicate et celeste.
-Sycophante - Une personne qui flatte de maniere excessive pour obtenir des faveurs.
-Cacophonie - Un melange discordant de sons desagreables.
-Equivoque - Qui peut etre interprete de differentes manieres, souvent de maniere ambigue.
-Eclectique - Qui rassemble des elements varies et heterogenes.
-Erudition - Une connaissance approfondie et etendue dans divers domaines.
-Iconoclaste - Une personne qui s'oppose aux idees etablies ou aux traditions.
-Lugubre - Qui evoque la tristesse ou le deuil, souvent associe a une atmosphere sombre.
-Melliflue - Qui a une qualite douce, harmonieuse et melodique, souvent utilise pour decrire la voix.
-Placide - D'une tranquilite calme et sereine.
+ethere - D'une nature legere, delicate et celeste.
+sycophante - Une personne qui flatte de maniere excessive pour obtenir des faveurs.
+cacophonie - Un melange discordant de sons desagreables.
+equivoque - Qui peut etre interprete de differentes manieres, souvent de maniere ambigue.
+eclectique - Qui rassemble des elements varies et heterogenes.
+erudition - Une connaissance approfondie et etendue dans divers domaines.
+iconoclaste - Une personne qui s'oppose aux idees etablies ou aux traditions.
+lugubre - Qui evoque la tristesse ou le deuil, souvent associe a une atmosphere sombre.
+melliflue - Qui a une qualite douce, harmonieuse et melodique, souvent utilisee pour decrire la voix.
+placide - D'une tranquilite calme et sereine.
+perspicace - Qui fait preuve d'une grande finesse d'esprit et de comprehension.
+facetieux - Qui aime faire des plaisanteries de maniere espiègle.
+querelleur - Une personne encline a se quereller ou a argumenter facilement.
+obnubiler - Obseder quelqu'un de maniere persistante.
+vicissitudes - Les changements imprevisibles et souvent difficiles de la vie.
+ephemere - De courte duree, ephemere.
+sycophante - Une personne qui flatte de maniere excessive pour obtenir des faveurs.
+magnanime - Qui manifeste une grande generosite d'esprit, particulierement envers un adversaire.
+ostracisme - L'exclusion deliberée ou le rejet social d'une personne ou d'un groupe.
+epoustouflant - Qui provoque l'etonnement ou l'admiration par sa grandeur ou son excellence.
+deference - Le respect et la soumission envers une personne jugee digne d'estime.
+ambiguite - Une situation ou une expression qui peut etre interpretee de differentes manieres.
+placide - D'une tranquilite calme et sereine.
+impavidite - Le fait de rester calme et intrépide face au danger.
+perseverance - La qualite de persister malgre les difficultes ou les obstacles.
+eclectique - Qui rassemble des elements varies et heterogenes.
+iconoclaste - Une personne qui s'oppose aux idees etablies ou aux traditions.
+reticent - Reserve, peu enclin a parler ou a s'exprimer.
+dissonance - Un melange discordant de sons desagreables.
+elucider - Clarifier ou expliquer quelque chose de complexe.
+solennel - Caracterise par une gravite et une formalite importantes.
+melliflu - Qui coule doucement et sucre, souvent utilise pour decrire la langue ou le discours.
+vindicatif - Cherchant a se venger ou a punir en reponse a une blessure ou une injustice.
+ubiquite - La capacite d'etre present en plusieurs endroits simultanement.
+ineffable - Incapable d'etre exprime par des mots en raison de son intensite ou de son excellence.
+insipide - Deprive de saveur ou d'interet, fade.
+apex - Le point le plus eleve ou le sommet.
+breve - Un signe de notation musicale indiquant une note courte.
+crypt - Un endroit secret ou cache.
+enigme - Un mystere ou quelque chose de difficile a comprendre.
+fugue - Une composition musicale caracterisee par un theme recurrent.
+grace - L'elegance et la beaute dans le mouvement ou l'apparence.
+have - D'une pâleur maladive ou terne.
+icare - Un personnage de la mythologie grecque qui a vole trop pres du soleil.
+juicy - Qui est plein de jus ou de saveur.
+kif - Une source de plaisir ou de satisfaction.
+lurid - Sensationnellement choquant ou horrifiant.
+mirth - Joie ou gaite, souvent exprimee par le rire.
+nacre - La substance brillante a l'interieur de certaines coquilles d'animaux marins.
+ombre - Une zone sombre resultant du blocage de la lumiere.
+prism - Un objet qui divise la lumiere en ses composants colores.
+quota - Une limite fixee pour une quantite donnee.
+rival - Une personne ou une chose en concurrence avec une autre.
+svelte - Elance et gracieux dans l'apparence ou la silhouette.
+tapis - Un revetement de sol epais et moelleux.
+utopie - Une societe ou un etat ideal, souvent difficile a atteindre.
+vague - Une serie de cretes et de creux dans une surface, comme la mer.
+xylog - Une unite de mesure de la frequence des vibrations sonores.
+yacht - Un bateau de plaisance de luxe.
+zeste - La partie externe et aromatique de l'ecorce des agrumes.
+bogue - Une coquille ou une enveloppe protectrice.
+crisp - Croustillant ou croquant.
+fjord - Une vallee glaciaire remplie d'eau de mer.
+genius - Une personne exceptionnellement talentueuse ou intelligente.
+jovial - Joyeux et enjoue.
+pixel - L'unite de base d'une image numerique, un point lumineux sur un ecran.

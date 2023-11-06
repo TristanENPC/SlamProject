@@ -25,14 +25,18 @@ def init_words(repert):
     So the returned list contains grid.Word objects representing every words writing in the doc
     '''
     list_words = []
+    list_just_words = []
     with open(repert) as file :
         contents = file.readlines()
     for i in range(len(contents)):
         contents[i] = contents[i].strip()
         contents[i] = contents[i].split(' - ')
-        list_words.append(grid.Word(contents[i][0],contents[i][1]))
+        if not (contents[i][0] in list_just_words) :
+            list_words.append(grid.Word(contents[i][0],contents[i][1]))
+            list_just_words.append(contents[i][0])
 
-    return list_words
+    list_words = set(list_words)
+    return list(list_words)
 
 
 class Game():
@@ -59,6 +63,10 @@ class Game():
 
 questions = init_questions('questions.txt')
 words = init_words('mots.txt')
-G = grid.Grid(10,10)
-G.generate(words)
+
+grid_generated = False
+while not grid_generated :
+    G = grid.Grid(10,10)
+    grid_generated = G.generate(words)
+
 G.display()

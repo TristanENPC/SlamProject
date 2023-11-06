@@ -1,66 +1,70 @@
-ethere - D'une nature legere, delicate et celeste.
-sycophante - Une personne qui flatte de maniere excessive pour obtenir des faveurs.
-cacophonie - Un melange discordant de sons desagreables.
-equivoque - Qui peut etre interprete de differentes manieres, souvent de maniere ambigue.
-eclectique - Qui rassemble des elements varies et heterogenes.
-erudition - Une connaissance approfondie et etendue dans divers domaines.
-iconoclaste - Une personne qui s'oppose aux idees etablies ou aux traditions.
-lugubre - Qui evoque la tristesse ou le deuil, souvent associe a une atmosphere sombre.
-melliflue - Qui a une qualite douce, harmonieuse et melodique, souvent utilisee pour decrire la voix.
-placide - D'une tranquilite calme et sereine.
-perspicace - Qui fait preuve d'une grande finesse d'esprit et de comprehension.
-facetieux - Qui aime faire des plaisanteries de maniere espiègle.
-querelleur - Une personne encline a se quereller ou a argumenter facilement.
-obnubiler - Obseder quelqu'un de maniere persistante.
-vicissitudes - Les changements imprevisibles et souvent difficiles de la vie.
-ephemere - De courte duree, ephemere.
-sycophante - Une personne qui flatte de maniere excessive pour obtenir des faveurs.
-magnanime - Qui manifeste une grande generosite d'esprit, particulierement envers un adversaire.
-ostracisme - L'exclusion deliberée ou le rejet social d'une personne ou d'un groupe.
-epoustouflant - Qui provoque l'etonnement ou l'admiration par sa grandeur ou son excellence.
-deference - Le respect et la soumission envers une personne jugee digne d'estime.
-ambiguite - Une situation ou une expression qui peut etre interpretee de differentes manieres.
-placide - D'une tranquilite calme et sereine.
-impavidite - Le fait de rester calme et intrépide face au danger.
-perseverance - La qualite de persister malgre les difficultes ou les obstacles.
-eclectique - Qui rassemble des elements varies et heterogenes.
-iconoclaste - Une personne qui s'oppose aux idees etablies ou aux traditions.
-reticent - Reserve, peu enclin a parler ou a s'exprimer.
-dissonance - Un melange discordant de sons desagreables.
-elucider - Clarifier ou expliquer quelque chose de complexe.
-solennel - Caracterise par une gravite et une formalite importantes.
-melliflu - Qui coule doucement et sucre, souvent utilise pour decrire la langue ou le discours.
-vindicatif - Cherchant a se venger ou a punir en reponse a une blessure ou une injustice.
-ubiquite - La capacite d'etre present en plusieurs endroits simultanement.
-ineffable - Incapable d'etre exprime par des mots en raison de son intensite ou de son excellence.
-insipide - Deprive de saveur ou d'interet, fade.
-apex - Le point le plus eleve ou le sommet.
-breve - Un signe de notation musicale indiquant une note courte.
-crypt - Un endroit secret ou cache.
-enigme - Un mystere ou quelque chose de difficile a comprendre.
-fugue - Une composition musicale caracterisee par un theme recurrent.
-grace - L'elegance et la beaute dans le mouvement ou l'apparence.
-have - D'une pâleur maladive ou terne.
-icare - Un personnage de la mythologie grecque qui a vole trop pres du soleil.
-juicy - Qui est plein de jus ou de saveur.
-kif - Une source de plaisir ou de satisfaction.
-lurid - Sensationnellement choquant ou horrifiant.
-mirth - Joie ou gaite, souvent exprimee par le rire.
-nacre - La substance brillante a l'interieur de certaines coquilles d'animaux marins.
-ombre - Une zone sombre resultant du blocage de la lumiere.
-prism - Un objet qui divise la lumiere en ses composants colores.
-quota - Une limite fixee pour une quantite donnee.
-rival - Une personne ou une chose en concurrence avec une autre.
-svelte - Elance et gracieux dans l'apparence ou la silhouette.
-tapis - Un revetement de sol epais et moelleux.
-utopie - Une societe ou un etat ideal, souvent difficile a atteindre.
-vague - Une serie de cretes et de creux dans une surface, comme la mer.
-xylog - Une unite de mesure de la frequence des vibrations sonores.
-yacht - Un bateau de plaisance de luxe.
-zeste - La partie externe et aromatique de l'ecorce des agrumes.
-bogue - Une coquille ou une enveloppe protectrice.
-crisp - Croustillant ou croquant.
-fjord - Une vallee glaciaire remplie d'eau de mer.
-genius - Une personne exceptionnellement talentueuse ou intelligente.
-jovial - Joyeux et enjoue.
-pixel - L'unite de base d'une image numerique, un point lumineux sur un ecran.
+sourire - Une expression du visage qui montre la joie, le bonheur ou l'amusement, generalement en courbant les coins de la bouche vers le haut.
+voyage - Le deplacement d'une personne d'un endroit a un autre, souvent pour le plaisir, la decouverte ou le travail.
+amical - Qui est chaleureux, cordial et sympathique envers les autres, favorisant des relations amicales.
+musique - L'art de creer des sons harmonieux ou rythmiques a l'aide d'instruments ou de la voix, souvent pour le plaisir et l'expression.
+lumiere - L'energie electromagnetique qui permet de voir et eclaire l'environnement, ainsi que la source de chaleur et de vie.
+bonheur - Un etat emotionnel de contentement, de satisfaction et de joie.
+maison - Un lieu de residence, de confort et de securite ou une personne vit.
+chien - Un animal domestique apprecie pour sa fidelite et sa compagnie, souvent utilise comme animal de compagnie.
+musee - Un lieu ou des oeuvres d'art, des artefacts historiques et d'autres objets sont exposes pour l'education et le divertissement du public.
+lire - L'action de parcourir et de comprendre le contenu ecrit d'un livre, d'un article ou d'un document.
+jardin - Un espace exterieur amenage pour la culture de plantes, de fleurs ou pour la detente.
+heureux - Un etat emotionnel de joie, de bien-etre et de satisfaction.
+chanson - Une composition musicale avec des paroles chantees.
+reveil - Un appareil qui sonne pour vous reveiller le matin.
+volonte - La faculte de prendre des decisions et de choisir consciemment.
+planete - Un objet celeste qui orbite autour d'une etoile, comme la Terre qui est notre planete.
+nuit - La periode de temps ou il fait sombre, generalement lorsque le soleil se couche.
+tableau - Une oeuvre d'art realisee en peignant sur une surface, souvent sur une toile.
+enfant - Un etre humain dans ses premieres annees de vie, generalement avant l'adolescence.
+ecole - Un etablissement d'enseignement ou les eleves acquierent des connaissances et des competences.
+bonheur - Un etat emotionnel de joie, de satisfaction et de contentement.
+voiture - Un moyen de transport a moteur pour deplacements sur route.
+soleil - L'etoile lumineuse qui eclair le ciel en journee.
+musique - L'art de creer des sons harmonieux ou rythmiques.
+temps - La mesure de la duree et de la sequence des evenements.
+verre - Un recipient transparent utilise pour boire des liquides.
+chien - Un animal domestique apprecie pour sa fidelite.
+chanteur - Une personne qui chante ou interprete des chansons.
+hiver - Une des quatre saisons avec des temperatures froides.
+arbre - Une plante ligneuse a tige principale et branches.
+manger - L'action de consommer des aliments pour se nourrir.
+maison - Un lieu de residence, de confort et de securite.
+lumiere - L'energie electromagnetique qui permet de voir.
+ville - Un centre urbain avec une population importante.
+eau - Le liquide incolore essentiel a la vie sur Terre.
+journee - La periode de temps entre le lever et le coucher du soleil.
+nuit - La periode de temps ou il fait sombre apres le coucher du soleil.
+famille - Un groupe de personnes liees par des liens de sang ou d'affection.
+etoile - Un objet celeste brillant present dans le ciel.
+animaux - Des etres vivants qui forment le regne animal.
+enfant - Un etre humain dans ses premieres annees de vie.
+parler - L'action de communiquer verbalement avec les autres.
+table - Un meuble avec un plateau pour manger ou travailler.
+amour - Un sentiment profond d'affection et d'attachement.
+travailler - L'action d'effectuer des taches pour gagner sa vie.
+merveilleux - Qui est extraordinaire, remarquable et impressionnant.
+cadeau - Un objet offert en signe d'amour, d'amitie ou pour marquer une occasion speciale.
+air - Le gaz incolore essentiel a la respiration des etres vivants.
+bonjour - Une salutation utilisee pour accueillir quelqu'un au debut de la journee.
+danse - L'expression artistique du mouvement corporel en rythme avec la musique.
+sport - Une activite physique pratiquee pour le plaisir ou la competition.
+fleur - La partie reproductive d'une plante, souvent coloree et parfumee.
+chambre - Une piece dans une maison ou l'on dort ou se repose.
+repas - Une occasion de manger de la nourriture.
+jardin - Un espace exterieur amenage pour la culture de plantes.
+vent - Le mouvement de l'air dans l'atmosphere.
+ecrire - L'action de produire des mots et des textes avec un stylo ou un clavier.
+sourire - Une expression du visage montrant la joie et le bonheur.
+monde - La planete Terre et tous les etres vivants qui l'habitent.
+aimer - Eprouver de l'affection et d'attachement envers quelqu'un ou quelque chose.
+matin - La premiere partie de la journee, depuis le lever du soleil.
+soir - La periode de temps entre l'apres-midi et la nuit.
+musicien - Une personne qui joue de la musique, souvent avec un instrument.
+manger - L'action de consommer des aliments pour se nourrir.
+voyage - Le deplacement d'une personne d'un endroit a un autre.
+montagne - Une elevation de terrain naturelle avec des pentes escarpees.
+bonsoir - Une salutation utilisee pour souhaiter une bonne soiree.
+film - Une oeuvre cinematographique presentee a l'ecran.
+nature - L'environnement physique et les elements naturels du monde.
+plaisir - La sensation de satisfaction, de bien-etre et de contentement.

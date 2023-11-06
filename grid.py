@@ -56,8 +56,10 @@ class Word():
 
 class Grid():
     def __init__(self,nb_lines,nb_columns):
-        self._table = np.full((nb_lines,nb_columns),None)
+        self._table = np.full((nb_lines,nb_columns),None)       # Array representing the full grid
+        self._shown_table = np.full((nb_lines,nb_columns),None) # Array representing the grid shown to players
         self._words = []
+        self._letters = []
 
     @property
     def table(self):
@@ -66,6 +68,10 @@ class Grid():
     @property
     def words(self):
         return self._words
+
+    @property
+    def letters(self):
+        return self._letters
 
     def display(self):
         '''
@@ -76,14 +82,14 @@ class Grid():
         for i in range(n):
             for j in range(m):
                 if self.table[i,j] == None :
-                    line_string += ' '
+                    line_string += '•'
                 else :
                     line_string += self.table[i,j]
                 line_string += ' '
             print(line_string)
             line_string = ''
 
-    def check_word_fits_in_grid_and_place_it(self,word,tuple_position):
+    def check_word_fits_in_grid_and_place_it(self,word,tuple_position,impossible_linkage):
         '''
         This function has three goals. The first is to check if the given word can be in the grid with a connection with the letter in position tuple_position in the grid. The second is to place the word in the grid if this word can integer the grid. The third is to return the position of the letter shared in the word. For example let's consider a 5x5 grid with in the left-top corner the word "tree" in horizontal position, if we give to this function the word "run" and the tuple_position (0,1) it will return "(True,0)" and it will place the word "run" behind the word "tree" the both sharing the same "r".
         Be carreful, the "word" argument is an objet from the class "Word" so it has its own position (vertical or horizontal), the checking will be effectif uniquely with the position assignated to the word. It doesn't check the both.
@@ -93,24 +99,33 @@ class Grid():
         letters_before = [word.name[i] for i in range(len(word.name)) if i<index_letter]
         letters_after = [word.name[i] for i in range(len(word.name)) if i>index_letter]
 
+        if tuple_position in impossible_linkage:
+            return False
+
+        str_condition = ''
+
         if word.is_horizontal :
 
             for k in range(1,len(letters_before)+1):
                 if (tuple_position[1]-k < 0) or (self.table[tuple_position[0],tuple_position[1]-k] != None and self.table[tuple_position[0],tuple_position[1]-k] != letters_before[-k]) or (tuple_position[0]-1 >= 0 and self.table[tuple_position[0]-1,tuple_position[1]-k] != None and self.table[tuple_position[0],tuple_position[1]-k] != letters_before[-k]) or (tuple_position[0]+1 < self.table.shape[0] and self.table[tuple_position[0]+1,tuple_position[1]-k] != None and self.table[tuple_position[0],tuple_position[1]-k] != letters_before[-k]) :
-                    return (False,index_letter)
+                    return False
+                elif self.table[tuple_position[0],tuple_position[1]-k] != None :
+                    str_condition += self.table[tuple_position[0],tuple_position[1]-k]
 
-            if (tuple_position[1]-len(letters_before)-1 >= 0) and (self.table[tuple_position[0],tuple_position[1]-len(letters_before)-1] != None) and (len(letters_before) != 0 and self.table[tuple_position[0],tuple_position[1]-len(letters_before)-1] != letters_before[0]) :
-                return (False,index_letter)
+            if (tuple_position[1]-len(letters_before)-1 >= 0) and (self.table[tuple_position[0],tuple_position[1]-len(letters_before)-1] != None) :
+                return False
 
             for k in range(len(letters_after)):
                 if (tuple_position[1]+k+1 >= self.table.shape[1]) or (self.table[tuple_position[0],tuple_position[1]+k+1] != None and self.table[tuple_position[0],tuple_position[1]+k+1] != letters_after[k]) or (tuple_position[0]-1 >= 0 and self.table[tuple_position[0]-1,tuple_position[1]+k+1] != None and self.table[tuple_position[0],tuple_position[1]+k+1] != letters_after[k]) or (tuple_position[0]+1 < self.table.shape[0] and self.table[tuple_position[0]+1,tuple_position[1]+k+1] != None and self.table[tuple_position[0],tuple_position[1]+k+1] != letters_after[k]) :
-                    return (False,index_letter)
+                    return False
+                elif self.table[tuple_position[0],tuple_position[1]+k+1] != None :
+                    str_condition += self.table[tuple_position[0],tuple_position[1]+k+1]
 
-            if (tuple_position[1]+len(letters_after)+1 < self.table.shape[1]) and (self.table[tuple_position[0],tuple_position[1]+len(letters_after)+1] != None) and (len(letters_after) != 0 and self.table[tuple_position[0],tuple_position[1]+len(letters_after)+1] != letters_after[-1]) :
-                return (False,index_letter)
+            if (tuple_position[1]+len(letters_after)+1 < self.table.shape[1]) and (self.table[tuple_position[0],tuple_position[1]+len(letters_after)+1] != None) :
+                return False
 
             if (len(letters_before) == 0) and (tuple_position[1]-1 >= 0) and (tuple_position[1]-1 != None):
-                return (False,index_letter)
+                return False
 
             for k in range(1,len(letters_before)+1):
                 self.table[tuple_position[0],tuple_position[1]-k] = letters_before[-k]
@@ -122,20 +137,27 @@ class Grid():
 
             for k in range(1,len(letters_before)+1):
                 if (tuple_position[0]-k < 0) or (self.table[tuple_position[0]-k,tuple_position[1]] != None and self.table[tuple_position[0]-k,tuple_position[1]] != letters_before[-k]) or (tuple_position[1]-1 >= 0 and self.table[tuple_position[0]-k,tuple_position[1]-1] != None and self.table[tuple_position[0]-k,tuple_position[1]] != letters_before[-k]) or (tuple_position[1]+1 < self.table.shape[1] and self.table[tuple_position[0]-k,tuple_position[1]+1] != None and self.table[tuple_position[0]-k,tuple_position[1]] != letters_before[-k]) :
-                    return (False,index_letter)
+                    return False
+                elif self.table[tuple_position[0]-k,tuple_position[1]] != None :
+                    str_condition += self.table[tuple_position[0]-k,tuple_position[1]]
 
-            if (tuple_position[0]-len(letters_before)-1 >= 0) and (self.table[tuple_position[0]-len(letters_before)-1,tuple_position[1]] != None) and (len(letters_before) != 0 and self.table[tuple_position[0]-len(letters_before)-1,tuple_position[1]] != letters_before[0]) :
-                return (False,index_letter)
+            if (tuple_position[0]-len(letters_before)-1 >= 0) and (self.table[tuple_position[0]-len(letters_before)-1,tuple_position[1]] != None) :
+                return False
 
             for k in range(len(letters_after)):
                 if (tuple_position[0]+k+1 >= self.table.shape[0]) or (self.table[tuple_position[0]+k+1,tuple_position[1]] != None and self.table[tuple_position[0]+k+1,tuple_position[1]] != letters_after[k]) or (tuple_position[1]-1 >= 0 and self.table[tuple_position[0]+k+1,tuple_position[1]-1] != None and self.table[tuple_position[0]+k+1,tuple_position[1]] != letters_after[k]) or (tuple_position[1]+1 < self.table.shape[1] and self.table[tuple_position[0]+k+1,tuple_position[1]+1] != None and self.table[tuple_position[0]+k+1,tuple_position[1]] != letters_after[k]) :
-                    return (False,index_letter)
+                    return False
+                elif self.table[tuple_position[0]+k+1,tuple_position[1]] != None :
+                    str_condition += self.table[tuple_position[0]+k+1,tuple_position[1]]
 
-            if (tuple_position[0]+len(letters_after)+1 < self.table.shape[0]) and (self.table[tuple_position[0]+len(letters_after)+1,tuple_position[1]] != None) and (len(letters_after) != 0 and self.table[tuple_position[0]+len(letters_after)+1,tuple_position[1]] != letters_after[-1]) :
-                return (False,index_letter)
+            if (tuple_position[0]+len(letters_after)+1 < self.table.shape[0]) and (self.table[tuple_position[0]+len(letters_after)+1,tuple_position[1]] != None) :
+                return False
 
             if (len(letters_before) == 0) and (tuple_position[0]-1 >= 0) and (tuple_position[0]-1 != None):
-                return (False,index_letter)
+                return False
+
+            if str_condition == word.name :
+                return False
 
             for k in range(1,len(letters_before)+1):
                 self.table[tuple_position[0]-k,tuple_position[1]] = letters_before[-k]
@@ -143,7 +165,7 @@ class Grid():
             for k in range(len(letters_after)):
                 self.table[tuple_position[0]+k+1,tuple_position[1]] = letters_after[k]
 
-        return (True,index_letter)
+        return True
 
 
 
@@ -152,6 +174,7 @@ class Grid():
         It generates an available grid with the words from words_list which means it modifies the table attribute from the grid object which is initially full of "None" with 10 words placed according the logical rules of a Slam grid. The generation is based on random so it can fail, if it occurs the methods will return a message "Error generation".
         '''
         current_word = Word(' ',' ')
+        impossible_positions = []
 
         # We search a word which has more than 6 letters fitting with the size of the grid, to be the first word
         while len(current_word.name) < 7 or len(current_word.name) >= self.table.shape[1]:
@@ -168,7 +191,7 @@ class Grid():
         current_word.first_letter_position = (0,0)
         self.words.append(current_word)
 
-        # We use a list of numbers to choice the shared letter in the two words
+        # We use a list of numbers to choose the shared letter in the two words
         # If this letter doesn't match with all the words in the words_list we can pop it from the list and try another one
         # So the number_of_index_letters is the remaining available letters to test
         available_index_letters = [i for i in range(len(current_word.name))]
@@ -185,7 +208,6 @@ class Grid():
         binary = False
 
         # This variable has been created to avoid the following problem : I place horizontally the word "foot". The random choices to find if the word "boat" match with the word "foot" by the letter "t". The answer is positive and so it places it vertically ending with the t shared with "foot". Now same thing for "television" with "boat" by the letter "t". The answer is also positive and now we have the word footelevision which is not correct. To avoid this problem we want to stock the shared position of two placed words.
-        problematic_position = -1
 
         while len(self.words) < 9 :    # We can change the 9 with an other number to have more or less words in the grid
 
@@ -195,8 +217,6 @@ class Grid():
 
                 index_in_grids_words -= 1
                 available_index_letters = [i for i in range(len(self.words[index_in_grids_words].name))]
-                if index_in_grids_words == len(self.words)-1:
-                    available_index_letters.pop(problematic_position)
                 number_of_index_letters = len(available_index_letters)
 
                 while (not binary) and (number_of_index_letters > 0) : # While we haven't placed an other word and it remains letters to test in the word
@@ -231,22 +251,23 @@ class Grid():
                             current_word.set_horizontal()
 
                         if current_word.is_horizontal :
-                            binary,problematic_position = self.check_word_fits_in_grid_and_place_it(current_word,(self.words[index_in_grids_words].first_letter_position[0]+c,self.words[index_in_grids_words].first_letter_position[1]))
+                            binary = self.check_word_fits_in_grid_and_place_it(current_word,(self.words[index_in_grids_words].first_letter_position[0]+c,self.words[index_in_grids_words].first_letter_position[1]),impossible_positions)
 
                             current_word.first_letter_position = (self.words[index_in_grids_words].first_letter_position[0]+c,self.words[index_in_grids_words].first_letter_position[1]-(current_word.name.index(self.words[index_in_grids_words].name[c])))
                         else :
-                            binary,problematic_position = self.check_word_fits_in_grid_and_place_it(current_word,(self.words[index_in_grids_words].first_letter_position[0],self.words[index_in_grids_words].first_letter_position[1]+c))
+                            binary = self.check_word_fits_in_grid_and_place_it(current_word,(self.words[index_in_grids_words].first_letter_position[0],self.words[index_in_grids_words].first_letter_position[1]+c),impossible_positions)
 
                             current_word.first_letter_position = (self.words[index_in_grids_words].first_letter_position[0]-(current_word.name.index(self.words[index_in_grids_words].name[c])),self.words[index_in_grids_words].first_letter_position[1]+c)
 
             if not binary :
-                print('Grid generation failed')
-                return None
+                return False
 
             else :
+                impossible_positions.append((self.words[index_in_grids_words].first_letter_position[0]+c,self.words[index_in_grids_words].first_letter_position[1]))
                 binary = False
                 self.words.append(current_word)
                 words_list.remove(current_word)
+        return True
 
 
 

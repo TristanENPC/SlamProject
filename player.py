@@ -18,7 +18,7 @@ class Player():
         return self._is_blocked
 
     def change_blocked(self):
-        self._is_blocked = not _self.is_blocked
+        self._is_blocked = not self.is_blocked
 
 class HumanPlayer(Player):
     def __init__(self,name0):

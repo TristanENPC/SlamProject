@@ -3,6 +3,7 @@
 import grid
 import player
 import question
+import time
 
 def init_questions(repert):
     '''
@@ -48,6 +49,32 @@ class Game():
         self._grid = None
         self._list_questions = []
         self._all_players_answered = False
+        
+    def slam(self,player):
+        '''
+        If a player does a slam, it looks if he's right. Else he looses
+        '''
+        self.grid.display()
+        number_word = input("Quel mot voulez-vous deviner ?")
+        answer = input("Quelle est votre réponse ?")
+        while (answer==self.grid.words[number_word] and self.grid.shown_table != self.grid.table):
+            print("Bonne réponse !")
+            #afficher le mot dans la grille 
+            number_word
+            answer
+            if time.sleep(15):
+                print("Vous avez mis trop de temps à répondre")
+                break
+        if self.grid.shown_table == self.grid.table:
+            player.points += 0 #mettre le bon nombre de points
+        else:
+            player.points = 0
+            self.list_player.remove(player)
+        
+        
+        
+        
+
 
     @property
     def list_player(self):

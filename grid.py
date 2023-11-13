@@ -64,6 +64,10 @@ class Grid():
     @property
     def table(self):
         return self._table
+    
+    @property
+    def shown_table(self):
+        return self._shown_table
 
     @property
     def words(self):

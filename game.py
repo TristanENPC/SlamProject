@@ -70,11 +70,9 @@ class Game():
         else:
             player.points = 0
             self.list_player.remove(player)
+             
+    #def turn(self):
         
-        
-        
-        
-
 
     @property
     def list_player(self):

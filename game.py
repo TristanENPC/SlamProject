@@ -57,16 +57,31 @@ class Game():
         self.grid.display()
         number_word = input("Quel mot voulez-vous deviner ?")
         answer = input("Quelle est votre réponse ?")
-        while (answer==self.grid.words[number_word] and self.grid.shown_table != self.grid.table):
+        points=0
+        
+        while (answer==self.grid.words[number_word].name and self.grid.shown_table != self.grid.table):
+            
             print("Bonne réponse !")
+
             #afficher le mot dans la grille 
-            number_word
-            answer
-            if time.sleep(15):
-                print("Vous avez mis trop de temps à répondre")
-                break
+            word=self.grid.words[number_word]
+            points+=word.length
+            if word.is_horizontal :
+                for j in range(word.first_letter_position[1],word.length):
+                    self.grid.shown_table[word.first_letter_position[0],j]=self.grid.table[word.first_letter_position[0],j]
+            if word.is_vertical :
+                for i in range(word.first_letter_position[0],word.length):
+                    self.grid.shown_table[word.first_letter_position[1],i]=self.grid.table[word.first_letter_position[1],i]
+                    
+            number_word = input("Quel mot voulez-vous deviner ?")
+            answer = input("Quelle est votre réponse ?")
+            
+            #if time.sleep(15): #mettre un temps de réponse max
+                #print("Vous avez mis trop de temps à répondre")
+                #break
+            
         if self.grid.shown_table == self.grid.table:
-            player.points += 0 #mettre le bon nombre de points
+            player.points += points 
         else:
             player.points = 0
             self.list_player.remove(player)

@@ -23,6 +23,10 @@ class Word():
         return self._definition
 
     @property
+    def length(self):
+        return self._length
+
+    @property
     def is_horizontal(self):
         return self._is_horizontal
 
@@ -64,7 +68,7 @@ class Grid():
     @property
     def table(self):
         return self._table
-    
+
     @property
     def shown_table(self):
         return self._shown_table
@@ -76,6 +80,9 @@ class Grid():
     @property
     def letters(self):
         return self._letters
+
+    def give_grid(self,G):
+        self._table = G
 
     def display(self):
         '''
@@ -93,12 +100,64 @@ class Grid():
             print(line_string)
             line_string = ''
 
+    def display_shown(self):
+        '''
+        It displays the grid which is an array as a str message to ease the vizualisation.
+        '''
+        line_string = ''
+        n,m = self.shown_table.shape
+        for i in range(n):
+            for j in range(m):
+                if self.shown_table[i,j] == None :
+                    line_string += '•'
+                else :
+                    line_string += self.shown_table[i,j]
+                line_string += ' '
+            print(line_string)
+            line_string = ''
+
+    def full_shown_table(self):
+        '''
+        It fulls the grid shown to the user
+        '''
+        n,m = self.table.shape
+        for i in range(n):
+            for j in range(m):
+                if self.table[i,j] != None :
+                    self.shown_table[i,j] = ' '
+
+    def comparate_grids(self):
+        '''
+        It returns true if the grid shown to the user and the grid full of words are equal
+        '''
+        res = True
+        n,m = self.table.shape
+        for i in range(n):
+            for j in range(m):
+                if self.table[i,j] != self.shown_table[i,j] :
+                    res = False
+                    break
+        return(res)
+
+    def pull_words_final(self,l_w):
+        for i in range(len(l_w)):
+            self._words.append(Word(l_w[i],''))
+
+    def pull_letters(self):
+        letters = []
+        for i in range(len(self.words)):
+            for j in range(len(self.words[i].name)):
+                letters.append(self.words[i].name[j])
+        self._letters = list(set(letters))
+
     def check_word_fits_in_grid_and_place_it(self,word,tuple_position,impossible_linkage):
         '''
         This function has three goals. The first is to check if the given word can be in the grid with a connection with the letter in position tuple_position in the grid. The second is to place the word in the grid if this word can integer the grid. The third is to return the position of the letter shared in the word. For example let's consider a 5x5 grid with in the left-top corner the word "tree" in horizontal position, if we give to this function the word "run" and the tuple_position (0,1) it will return "(True,0)" and it will place the word "run" behind the word "tree" the both sharing the same "r".
         Be carreful, the "word" argument is an objet from the class "Word" so it has its own position (vertical or horizontal), the checking will be effectif uniquely with the position assignated to the word. It doesn't check the both.
         '''
         both_letter = self.table[tuple_position]
+        if both_letter == None :
+            return False
         index_letter = word.name.index(both_letter)
         letters_before = [word.name[i] for i in range(len(word.name)) if i<index_letter]
         letters_after = [word.name[i] for i in range(len(word.name)) if i>index_letter]

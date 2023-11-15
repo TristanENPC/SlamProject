@@ -17,6 +17,10 @@ class Player():
     def is_blocked(self):
         return self._is_blocked
 
+    @points.setter
+    def points(self,v):
+        self._points = v
+
     def change_blocked(self):
         self._is_blocked = not self.is_blocked
 

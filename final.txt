@@ -1,0 +1,15 @@
+carnaval :        confetti
+carnaval :           e    
+carnaval :           t    
+carnaval :     costume    
+carnaval :       e        
+carnaval :    m  r        
+carnaval :   bal p        
+carnaval :    s venise    
+carnaval : c  q  n        
+carnaval : h  u  t        
+carnaval : arlequin       
+carnaval : r     n        
+confetti , fete , costume , serpentin , venise , arlequin , char , bal , masque
+(00,07) / (00,10) / (03,04) / (03,06) / (07,05) / (10,00) / (08,00) / (06,02) / (05,03)
+h , v , h , v , h , h , v , h , v

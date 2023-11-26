@@ -6,6 +6,8 @@ import question
 import time
 import threading
 
+
+
 def init_questions(repert):
     '''
     It reads the document repert and it adds every questions in the document in a list.
@@ -46,6 +48,7 @@ def init_final_grid(repert):
         contents = file.readlines()
     theme = contents[0][0:8]
     word_list = contents[12].split(' , ')
+    word_list[-1] = word_list[-1].split('\n')[0]
     first = contents[13].split(' / ')
     orientation = contents[14].split(' , ')
     for i in range(12):
@@ -105,12 +108,11 @@ class Game():
             print('Vous avez raté votre Slam')
             self.list_player.remove(player)
             
-    def final_turn(self):
-        
-        theme,final_grid,w_l,f_p,ori = init_final_grid('final.txt')
+    def load_final(self):
+        # On charge la grille de la finale
+        theme,final_grid,w_l,f_p,ori = init_final_grid('final.txt') # theme = le thème de la grille, final_grid = matrice représentant la grille, w_l = liste des mots dans la grille, f_p = position des premières lettres de chaque mot, ori = orientation des mots dans la grille
         print('Voici votre thème : ',theme)
         self._grid = grid.Grid(final_grid.shape[0],final_grid.shape[1])
-        print(final_grid)
         self.grid.give_grid(grid.np.array(final_grid))
         self.grid.full_shown_table()
         self.grid.pull_words_final(w_l)
@@ -119,22 +121,30 @@ class Game():
             if ori[i] == 'v' :
                 self.grid.words[i].change_orientation()
         self.grid.pull_letters()
+        
+        # [A CHANGER] Il faut demander les lettres à l'utilisateur, pour l'instant ça choisit les 6 premières de la liste des lettres
         given_letters = self.grid.letters[:6]
         
-        
+        # On charge la grille de la finale à montrer au joueur
         for i in range(final_grid.shape[0]):
             for j in range(final_grid.shape[1]):
                 if self.grid.table[i,j] in given_letters :
                     self.grid.shown_table[i,j] = self.grid.table[i,j]
-                
-        print('Et voici votre grille : ')
-        self.grid.display_shown()
-        print('Vous avec 1 minute')
-
-        number_word = int(input("Quel mot voulez-vous deviner ?"))
-        answer = input("Quelle est votre réponse ?")
+            
+    def final_turn(self):
         
-        while (not self.grid.comparate_grids()):
+        self.load_final()
+        
+        # On lance la finale        
+        print('Et voici votre grille : ')
+        self.grid.display_shown_site()
+        print('Vous avec 1 minute')
+        temps_debut = grid.time.time()
+        temps_ecoule = 0
+        
+        while (not self.grid.comparate_grids()) and temps_ecoule < 60:
+            number_word = int(input("Quel mot voulez-vous deviner ?"))
+            answer = input("Quelle est votre réponse ?")
             if answer==self.grid.words[number_word].name :
                 print("Bonne réponse !")
                 word=self.grid.words[number_word]
@@ -147,11 +157,13 @@ class Game():
             else :
                 print("Non")
                     
-            self.grid.display_shown()        
-            number_word = int(input("Quel mot voulez-vous deviner ?"))
-            answer = input("Quelle est votre réponse ?")
-            
-        print('fin jeu')
+            self.grid.display_shown()
+            temps_ecoule = grid.time.time() - temps_debut
+
+        if self.grid.comparate_grids() :
+            print('Bravo')
+        else :
+            print('Temps écoulé !')
         
              
     #def turn(self):

@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 class Word():
     def __init__(self,name0,definition0):
@@ -90,15 +91,77 @@ class Grid():
         '''
         line_string = ''
         n,m = self.table.shape
-        for i in range(n):
-            for j in range(m):
-                if self.table[i,j] == None :
+        G = np.full((n+2,m+2),None)
+        G[1:n+1,1:m+1] = self.table
+
+        for i in range(len(self.words)):
+            if self.words[i].is_horizontal :
+                G[self.words[i].first_letter_position[0]+1,self.words[i].first_letter_position[1]] = str(i)
+            else :
+                G[self.words[i].first_letter_position[0],self.words[i].first_letter_position[1]+1] = str(i)
+
+        for i in range(n+2):
+            for j in range(m+2):
+                if G[i,j] == None :
                     line_string += '•'
                 else :
-                    line_string += self.table[i,j]
+                    line_string += G[i,j]
                 line_string += ' '
             print(line_string)
             line_string = ''
+
+    def display_site(self):
+        '''
+        It displays the grid which is an array as a str message to ease the vizualisation.
+        '''
+        res = '<div class="grid">'
+        line_string = ''
+        n,m = self.table.shape
+        G = np.full((n+2,m+2),None)
+        G[1:n+1,1:m+1] = self.table
+
+        for i in range(len(self.words)):
+            if self.words[i].is_horizontal :
+                G[self.words[i].first_letter_position[0]+1,self.words[i].first_letter_position[1]] = str(i)
+            else :
+                G[self.words[i].first_letter_position[0],self.words[i].first_letter_position[1]+1] = str(i)
+
+
+        for i in range(n + 2):
+            res += '<div id="game-grid" class="grid">'
+            for j in range(m + 2):
+                cell_content = '•' if G[i, j] is None else str(G[i, j])
+                cell_class = 'empty-cell' if G[i, j] is None else 'word-cell'
+                res += f'<div class="{cell_class}">{cell_content}</div>'
+            res += '</div>'
+        return res
+
+    def display_shown_site(self):
+        '''
+        It displays the grid which is an array as a str message to ease the vizualisation.
+        '''
+        res = '<div class="grid">'
+        line_string = ''
+        n,m = self.shown_table.shape
+        G = np.full((n+2,m+2),None)
+        G[1:n+1,1:m+1] = self.shown_table
+
+        for i in range(len(self.words)):
+            if self.words[i].is_horizontal :
+                G[self.words[i].first_letter_position[0]+1,self.words[i].first_letter_position[1]] = str(i)
+            else :
+                G[self.words[i].first_letter_position[0],self.words[i].first_letter_position[1]+1] = str(i)
+
+
+        for i in range(n + 2):
+            res += '<div id="game-grid" class="grid">'
+            for j in range(m + 2):
+                cell_content = '•' if G[i, j] is None else str(G[i, j])
+                cell_class = 'empty-cell' if G[i, j] is None else 'word-cell'
+                res += f'<div class="{cell_class}">{cell_content}</div>'
+            res += '</div>'
+        return res
+
 
     def display_shown(self):
         '''
@@ -106,12 +169,21 @@ class Grid():
         '''
         line_string = ''
         n,m = self.shown_table.shape
-        for i in range(n):
-            for j in range(m):
-                if self.shown_table[i,j] == None :
+        G = np.full((n+2,m+2),None)
+        G[1:n+1,1:m+1] = self.shown_table
+
+        for i in range(len(self.words)):
+            if self.words[i].is_horizontal :
+                G[self.words[i].first_letter_position[0]+1,self.words[i].first_letter_position[1]] = str(i)
+            else :
+                G[self.words[i].first_letter_position[0],self.words[i].first_letter_position[1]+1] = str(i)
+
+        for i in range(n+2):
+            for j in range(m+2):
+                if G[i,j] == None :
                     line_string += '•'
                 else :
-                    line_string += self.shown_table[i,j]
+                    line_string += G[i,j]
                 line_string += ' '
             print(line_string)
             line_string = ''
@@ -271,8 +343,11 @@ class Grid():
         binary = False
 
         # This variable has been created to avoid the following problem : I place horizontally the word "foot". The random choices to find if the word "boat" match with the word "foot" by the letter "t". The answer is positive and so it places it vertically ending with the t shared with "foot". Now same thing for "television" with "boat" by the letter "t". The answer is also positive and now we have the word footelevision which is not correct. To avoid this problem we want to stock the shared position of two placed words.
+        temps_debut = time.time()
+        temps_ecoule = 0
 
-        while len(self.words) < 9 :    # We can change the 9 with an other number to have more or less words in the grid
+        while len(self.words) < 9 and temps_ecoule < 10:    # We can change the 9 with an other number to have more or less words in the grid
+            temps_ecoule = time.time() - temps_debut
 
             index_in_grids_words = len(self.words)
 

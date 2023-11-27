@@ -130,6 +130,7 @@ class Game():
             for j in range(final_grid.shape[1]):
                 if self.grid.table[i,j] in given_letters :
                     self.grid.shown_table[i,j] = self.grid.table[i,j]
+                
             
     def final_turn(self):
         

@@ -46,12 +46,15 @@ body {
 }
 
 .container_main {
-    display : flex;
-    flex-direction : column;
-    justify-content: center;
-    padding-top : 0.5em;
-    padding-bottom : 0.5em;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.container_grid {
+    padding-left : 570px;
+    
 }
 
 .container_footer{
@@ -70,4 +73,28 @@ body {
     color : white;
     border-radius : 1em;
     text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); /* Ajustez la largeur minimale et la fraction de largeur au besoin */
+    gap: 2px;
+    justify-content: center;
+    gap : 0px;
+}
+
+.empty-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px; /* Ajustez la hauteur au besoin pour obtenir des cellules carrées */
+    background-color: lightgray; /* Couleur de fond par défaut */
+}
+
+.word-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px; /* Ajustez la hauteur au besoin pour obtenir des cellules carrées */
+    background-color: lightblue; /* Couleur de fond par défaut */
 }

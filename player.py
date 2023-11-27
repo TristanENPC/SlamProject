@@ -1,4 +1,4 @@
-class Player():
+class Player:
     def __init__(self, name0):
         self._name = name0
         self._is_playing = True
@@ -32,4 +32,4 @@ class HumanPlayer(Player):
 
 class BotPlayer(Player):
     def __init__(self):
-        super().__init__('Bot')
+        super().__init__("Bot")

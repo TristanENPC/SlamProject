@@ -1,13 +1,13 @@
 import numpy as np
 
 
-class Word():
+class Word:
     def __init__(self, name0, definition0):
-        '''
+        """
         name0 : str
         definition0 : str
         first_letter_position0 : tuple of two int (i, j)
-        '''
+        """
         self._name = name0
         self._definition = definition0
         self._is_horizontal = True
@@ -57,11 +57,13 @@ class Word():
         self._is_vertical = True
 
 
-class Grid():
+class Grid:
     def __init__(self, nb_lines, nb_columns):
         self._size = (nb_lines, nb_columns)
-        self._table = np.full(self._size, None)        # Array representing the full grid
-        self._shown_table = np.full(self._size, None)  # Array representing the grid shown to players
+        self._table = np.full(self._size, None)  # Array representing the full grid
+        self._shown_table = np.full(
+            self._size, None
+        )  # Array representing the grid shown to players
         self._words = []
         self._letters = []
 
@@ -93,65 +95,71 @@ class Grid():
     def add_word_to_shown_table(self, w):
         # IL FAUT METTRE UNE ERREUR SI LE MOT N'APPARTIENT PAS A grid._words
         for i in range(len(self.words)):
-            word = ''
+            word = ""
             if self.words[i].name == w:
                 word = self.words[i]
         if word.is_horizontal():
             line = word.first_letter_position()[0]
-            for col in range(word.first_letter_position()[1], word.first_letter_position()[1] + word.lenght):
+            for col in range(
+                word.first_letter_position()[1],
+                word.first_letter_position()[1] + word.lenght,
+            ):
                 self.shown_table[line][col] = word[col]
         else:
-            assert (word.is_vertical())
+            assert word.is_vertical()
             col = word.first_letter_position()[1]
-            for line in range(word.first_letter_position()[0], word.first_letter_position()[0] + word.lenght):
+            for line in range(
+                word.first_letter_position()[0],
+                word.first_letter_position()[0] + word.lenght,
+            ):
                 self.shown_table[line][col] = word[line]
 
     def display(self):
-        '''
+        """
         It displays the grid which is an array as a str message to ease the vizualisation.
-        '''
-        line_string = ''
+        """
+        line_string = ""
         n, m = self.table.shape
         for i in range(n):
             for j in range(m):
                 if self.table[i, j] is None:
-                    line_string += '•'
+                    line_string += "•"
                 else:
                     line_string += self.table[i, j]
-                line_string += ' '
+                line_string += " "
             print(line_string)
-            line_string = ''
+            line_string = ""
 
     def display_shown(self):
-        '''
+        """
         It displays the grid which is an array as a str message to ease the vizualisation.
-        '''
-        line_string = ''
+        """
+        line_string = ""
         n, m = self.shown_table.shape
         for i in range(n):
             for j in range(m):
                 if self.shown_table[i, j] is None:
-                    line_string += '•'
+                    line_string += "•"
                 else:
                     line_string += self.shown_table[i, j]
-                line_string += ' '
+                line_string += " "
             print(line_string)
-            line_string = ''
+            line_string = ""
 
     def full_shown_table(self):
-        '''
+        """
         It fulls the grid shown to the user
-        '''
+        """
         n, m = self.table.shape
         for i in range(n):
             for j in range(m):
                 if self.table[i, j] is not None:
-                    self.shown_table[i, j] = ' '
+                    self.shown_table[i, j] = " "
 
     def comparate_grids(self):
-        '''
+        """
         It returns true if the grid shown to the user and the grid full of words are equal
-        '''
+        """
         res = True
         n, m = self.table.shape
         for i in range(n):
@@ -159,11 +167,11 @@ class Grid():
                 if self.table[i, j] != self.shown_table[i, j]:
                     res = False
                     break
-        return (res)
+        return res
 
     def pull_words_final(self, l_w):
         for i in range(len(l_w)):
-            self._words.append(Word(l_w[i], ''))
+            self._words.append(Word(l_w[i], ""))
 
     def pull_letters(self):
         letters = []
@@ -172,8 +180,10 @@ class Grid():
                 letters.append(self.words[i].name[j])
         self._letters = list(set(letters))
 
-    def check_word_fits_in_grid_and_place_it(self, word, tuple_position, impossible_linkage):
-        '''
+    def check_word_fits_in_grid_and_place_it(
+        self, word, tuple_position, impossible_linkage
+    ):
+        """
         This function has three goals.
         The first is to check if the given word can be in the grid with a connection with the letter in position tuple_position in the grid.
         The second is to place the word in the grid if this word can integer the grid.
@@ -182,93 +192,231 @@ class Grid():
         if we give to this function the word "run" and the tuple_position (0,1) it will return "(True,0)" and it will place the word "run" behind the word "tree" the both sharing the same "r".
         Be carreful, the "word" argument is an objet from the class "Word" so it has its own position (vertical or horizontal),
         the checking will be effectif uniquely with the position assignated to the word. It doesn't check the both.
-        '''
+        """
         both_letter = self.table[tuple_position]
         if both_letter is None:
             return False
         index_letter = word.name.index(both_letter)
-        letters_before = [word.name[i] for i in range(len(word.name)) if i < index_letter]
-        letters_after = [word.name[i] for i in range(len(word.name)) if i > index_letter]
+        letters_before = [
+            word.name[i] for i in range(len(word.name)) if i < index_letter
+        ]
+        letters_after = [
+            word.name[i] for i in range(len(word.name)) if i > index_letter
+        ]
 
         if tuple_position in impossible_linkage:
             return False
 
-        str_condition = ''
+        str_condition = ""
 
         if word.is_horizontal:
-
-            for k in range(1, len(letters_before)+1):
-                if (tuple_position[1]-k < 0) or (self.table[tuple_position[0], tuple_position[1]-k] is not None and self.table[tuple_position[0], tuple_position[1]-k] != letters_before[-k]) or (tuple_position[0]-1 >= 0 and self.table[tuple_position[0]-1, tuple_position[1]-k] is not None and self.table[tuple_position[0], tuple_position[1]-k] != letters_before[-k]) or (tuple_position[0]+1 < self.table.shape[0] and self.table[tuple_position[0]+1, tuple_position[1]-k] is not None and self.table[tuple_position[0], tuple_position[1]-k] != letters_before[-k]):
+            for k in range(1, len(letters_before) + 1):
+                if (
+                    (tuple_position[1] - k < 0)
+                    or (
+                        self.table[tuple_position[0], tuple_position[1] - k] is not None
+                        and self.table[tuple_position[0], tuple_position[1] - k]
+                        != letters_before[-k]
+                    )
+                    or (
+                        tuple_position[0] - 1 >= 0
+                        and self.table[tuple_position[0] - 1, tuple_position[1] - k]
+                        is not None
+                        and self.table[tuple_position[0], tuple_position[1] - k]
+                        != letters_before[-k]
+                    )
+                    or (
+                        tuple_position[0] + 1 < self.table.shape[0]
+                        and self.table[tuple_position[0] + 1, tuple_position[1] - k]
+                        is not None
+                        and self.table[tuple_position[0], tuple_position[1] - k]
+                        != letters_before[-k]
+                    )
+                ):
                     return False
-                elif self.table[tuple_position[0], tuple_position[1]-k] is not None:
-                    str_condition += self.table[tuple_position[0], tuple_position[1]-k]
+                elif self.table[tuple_position[0], tuple_position[1] - k] is not None:
+                    str_condition += self.table[
+                        tuple_position[0], tuple_position[1] - k
+                    ]
 
-            if (tuple_position[1]-len(letters_before)-1 >= 0) and (self.table[tuple_position[0], tuple_position[1]-len(letters_before)-1] is not None):
+            if (tuple_position[1] - len(letters_before) - 1 >= 0) and (
+                self.table[
+                    tuple_position[0], tuple_position[1] - len(letters_before) - 1
+                ]
+                is not None
+            ):
                 return False
 
             for k in range(len(letters_after)):
-                if (tuple_position[1]+k+1 >= self.table.shape[1]) or (self.table[tuple_position[0], tuple_position[1]+k+1] is not None and self.table[tuple_position[0], tuple_position[1]+k+1] != letters_after[k]) or (tuple_position[0]-1 >= 0 and self.table[tuple_position[0]-1, tuple_position[1]+k+1] is not None and self.table[tuple_position[0], tuple_position[1]+k+1] != letters_after[k]) or (tuple_position[0]+1 < self.table.shape[0] and self.table[tuple_position[0]+1, tuple_position[1]+k+1] is not None and self.table[tuple_position[0], tuple_position[1]+k+1] != letters_after[k]):
+                if (
+                    (tuple_position[1] + k + 1 >= self.table.shape[1])
+                    or (
+                        self.table[tuple_position[0], tuple_position[1] + k + 1]
+                        is not None
+                        and self.table[tuple_position[0], tuple_position[1] + k + 1]
+                        != letters_after[k]
+                    )
+                    or (
+                        tuple_position[0] - 1 >= 0
+                        and self.table[tuple_position[0] - 1, tuple_position[1] + k + 1]
+                        is not None
+                        and self.table[tuple_position[0], tuple_position[1] + k + 1]
+                        != letters_after[k]
+                    )
+                    or (
+                        tuple_position[0] + 1 < self.table.shape[0]
+                        and self.table[tuple_position[0] + 1, tuple_position[1] + k + 1]
+                        is not None
+                        and self.table[tuple_position[0], tuple_position[1] + k + 1]
+                        != letters_after[k]
+                    )
+                ):
                     return False
-                elif self.table[tuple_position[0], tuple_position[1]+k+1] is not None:
-                    str_condition += self.table[tuple_position[0], tuple_position[1]+k+1]
+                elif (
+                    self.table[tuple_position[0], tuple_position[1] + k + 1] is not None
+                ):
+                    str_condition += self.table[
+                        tuple_position[0], tuple_position[1] + k + 1
+                    ]
 
-            if (tuple_position[1]+len(letters_after)+1 < self.table.shape[1]) and (self.table[tuple_position[0], tuple_position[1]+len(letters_after)+1] is not None):
+            if (tuple_position[1] + len(letters_after) + 1 < self.table.shape[1]) and (
+                self.table[
+                    tuple_position[0], tuple_position[1] + len(letters_after) + 1
+                ]
+                is not None
+            ):
                 return False
 
-            if (len(letters_before) == 0) and (tuple_position[1]-1 >= 0) and (tuple_position[1]-1 is not None):
+            if (
+                (len(letters_before) == 0)
+                and (tuple_position[1] - 1 >= 0)
+                and (tuple_position[1] - 1 is not None)
+            ):
                 return False
 
-            for k in range(1, len(letters_before)+1):
-                self.table[tuple_position[0], tuple_position[1]-k] = letters_before[-k]
+            for k in range(1, len(letters_before) + 1):
+                self.table[tuple_position[0], tuple_position[1] - k] = letters_before[
+                    -k
+                ]
 
             for k in range(len(letters_after)):
-                self.table[tuple_position[0], tuple_position[1]+k+1] = letters_after[k]
+                self.table[
+                    tuple_position[0], tuple_position[1] + k + 1
+                ] = letters_after[k]
 
         else:
-
-            for k in range(1, len(letters_before)+1):
-                if (tuple_position[0]-k < 0) or (self.table[tuple_position[0]-k, tuple_position[1]] is not None and self.table[tuple_position[0]-k, tuple_position[1]] != letters_before[-k]) or (tuple_position[1]-1 >= 0 and self.table[tuple_position[0]-k, tuple_position[1]-1] is not None and self.table[tuple_position[0]-k, tuple_position[1]] != letters_before[-k]) or (tuple_position[1]+1 < self.table.shape[1] and self.table[tuple_position[0]-k, tuple_position[1]+1] is not None and self.table[tuple_position[0]-k, tuple_position[1]] != letters_before[-k]):
+            for k in range(1, len(letters_before) + 1):
+                if (
+                    (tuple_position[0] - k < 0)
+                    or (
+                        self.table[tuple_position[0] - k, tuple_position[1]] is not None
+                        and self.table[tuple_position[0] - k, tuple_position[1]]
+                        != letters_before[-k]
+                    )
+                    or (
+                        tuple_position[1] - 1 >= 0
+                        and self.table[tuple_position[0] - k, tuple_position[1] - 1]
+                        is not None
+                        and self.table[tuple_position[0] - k, tuple_position[1]]
+                        != letters_before[-k]
+                    )
+                    or (
+                        tuple_position[1] + 1 < self.table.shape[1]
+                        and self.table[tuple_position[0] - k, tuple_position[1] + 1]
+                        is not None
+                        and self.table[tuple_position[0] - k, tuple_position[1]]
+                        != letters_before[-k]
+                    )
+                ):
                     return False
-                elif self.table[tuple_position[0]-k, tuple_position[1]] is not None:
-                    str_condition += self.table[tuple_position[0]-k, tuple_position[1]]
+                elif self.table[tuple_position[0] - k, tuple_position[1]] is not None:
+                    str_condition += self.table[
+                        tuple_position[0] - k, tuple_position[1]
+                    ]
 
-            if (tuple_position[0]-len(letters_before)-1 >= 0) and (self.table[tuple_position[0] - len(letters_before)-1, tuple_position[1]] is not None):
+            if (tuple_position[0] - len(letters_before) - 1 >= 0) and (
+                self.table[
+                    tuple_position[0] - len(letters_before) - 1, tuple_position[1]
+                ]
+                is not None
+            ):
                 return False
 
             for k in range(len(letters_after)):
-                if (tuple_position[0]+k+1 >= self.table.shape[0]) or (self.table[tuple_position[0]+k+1, tuple_position[1]] is not None and self.table[tuple_position[0]+k+1, tuple_position[1]] != letters_after[k]) or (tuple_position[1]-1 >= 0 and self.table[tuple_position[0]+k+1, tuple_position[1]-1] is not None and self.table[tuple_position[0]+k+1, tuple_position[1]] != letters_after[k]) or (tuple_position[1]+1 < self.table.shape[1] and self.table[tuple_position[0]+k+1, tuple_position[1]+1] is not None and self.table[tuple_position[0]+k+1, tuple_position[1]] != letters_after[k]):
+                if (
+                    (tuple_position[0] + k + 1 >= self.table.shape[0])
+                    or (
+                        self.table[tuple_position[0] + k + 1, tuple_position[1]]
+                        is not None
+                        and self.table[tuple_position[0] + k + 1, tuple_position[1]]
+                        != letters_after[k]
+                    )
+                    or (
+                        tuple_position[1] - 1 >= 0
+                        and self.table[tuple_position[0] + k + 1, tuple_position[1] - 1]
+                        is not None
+                        and self.table[tuple_position[0] + k + 1, tuple_position[1]]
+                        != letters_after[k]
+                    )
+                    or (
+                        tuple_position[1] + 1 < self.table.shape[1]
+                        and self.table[tuple_position[0] + k + 1, tuple_position[1] + 1]
+                        is not None
+                        and self.table[tuple_position[0] + k + 1, tuple_position[1]]
+                        != letters_after[k]
+                    )
+                ):
                     return False
-                elif self.table[tuple_position[0]+k+1, tuple_position[1]] is not None:
-                    str_condition += self.table[tuple_position[0]+k+1, tuple_position[1]]
+                elif (
+                    self.table[tuple_position[0] + k + 1, tuple_position[1]] is not None
+                ):
+                    str_condition += self.table[
+                        tuple_position[0] + k + 1, tuple_position[1]
+                    ]
 
-            if (tuple_position[0]+len(letters_after)+1 < self.table.shape[0]) and (self.table[tuple_position[0]+len(letters_after)+1, tuple_position[1]] is not None):
+            if (tuple_position[0] + len(letters_after) + 1 < self.table.shape[0]) and (
+                self.table[
+                    tuple_position[0] + len(letters_after) + 1, tuple_position[1]
+                ]
+                is not None
+            ):
                 return False
 
-            if (len(letters_before) == 0) and (tuple_position[0]-1 >= 0) and (tuple_position[0]-1 is not None):
+            if (
+                (len(letters_before) == 0)
+                and (tuple_position[0] - 1 >= 0)
+                and (tuple_position[0] - 1 is not None)
+            ):
                 return False
 
             if str_condition == word.name:
                 return False
 
-            for k in range(1, len(letters_before)+1):
-                self.table[tuple_position[0]-k, tuple_position[1]] = letters_before[-k]
+            for k in range(1, len(letters_before) + 1):
+                self.table[tuple_position[0] - k, tuple_position[1]] = letters_before[
+                    -k
+                ]
 
             for k in range(len(letters_after)):
-                self.table[tuple_position[0]+k+1, tuple_position[1]] = letters_after[k]
+                self.table[
+                    tuple_position[0] + k + 1, tuple_position[1]
+                ] = letters_after[k]
 
         return True
 
     def generate(self, words_list):
-        '''
+        """
         It generates an available grid with the words from words_list which means it modifies the table attribute from the grid object
         which is initially full of "None" with 10 words placed according the logical rules of a Slam grid.
         The generation is based on random so it can fail, if it occurs the methods will return a message "Error generation".
-        '''
-        current_word = Word(' ', ' ')
+        """
+        current_word = Word(" ", " ")
         impossible_positions = []
 
         # We search a word which has more than 6 letters fitting with the size of the grid, to be the first word
-        while len(current_word.name) < 7 or len(current_word.name) >= self.table.shape[1]:
+        while (
+            len(current_word.name) < 7 or len(current_word.name) >= self.table.shape[1]
+        ):
             random_variable = np.random.randint(len(words_list))
             current_word = words_list[random_variable]
 
@@ -300,18 +448,23 @@ class Grid():
 
         # This variable has been created to avoid the following problem : I place horizontally the word "foot". The random choices to find if the word "boat" match with the word "foot" by the letter "t". The answer is positive and so it places it vertically ending with the t shared with "foot". Now same thing for "television" with "boat" by the letter "t". The answer is also positive and now we have the word footelevision which is not correct. To avoid this problem we want to stock the shared position of two placed words.
 
-        while len(self.words) < 9:    # We can change the 9 with an other number to have more or less words in the grid
-
+        while (
+            len(self.words) < 9
+        ):  # We can change the 9 with an other number to have more or less words in the grid
             index_in_grids_words = len(self.words)
 
-            while (not binary) and (index_in_grids_words > -1):  # While we haven't placed an other word and it remains words to test in the grid
-
+            while (not binary) and (
+                index_in_grids_words > -1
+            ):  # While we haven't placed an other word and it remains words to test in the grid
                 index_in_grids_words -= 1
-                available_index_letters = [i for i in range(len(self.words[index_in_grids_words].name))]
+                available_index_letters = [
+                    i for i in range(len(self.words[index_in_grids_words].name))
+                ]
                 number_of_index_letters = len(available_index_letters)
 
-                while (not binary) and (number_of_index_letters > 0):  # While we haven't placed an other word and it remains letters to test in the word
-
+                while (not binary) and (
+                    number_of_index_letters > 0
+                ):  # While we haven't placed an other word and it remains letters to test in the word
                     available_words = []
                     words_already_tried = []
 
@@ -320,14 +473,18 @@ class Grid():
                     number_of_index_letters -= 1
 
                     for i in range(len(words_list)):
-                        if self.words[index_in_grids_words].name[c] in words_list[i].name:
+                        if (
+                            self.words[index_in_grids_words].name[c]
+                            in words_list[i].name
+                        ):
                             available_words.append(words_list[i])
 
                     available_index_words = [i for i in range(len(available_words))]
                     number_of_index_words = len(available_words)
 
-                    while (not binary) and (len(available_words) != len(words_already_tried)):  # While we haven't placed an other word and it remains words to test in the words_list which have a shared letter with the word in the grid
-
+                    while (not binary) and (
+                        len(available_words) != len(words_already_tried)
+                    ):  # While we haven't placed an other word and it remains words to test in the words_list which have a shared letter with the word in the grid
                         b = np.random.randint(number_of_index_words)
                         d = available_index_words[b]
                         current_word = available_words[d]
@@ -342,19 +499,74 @@ class Grid():
                             current_word.set_horizontal()
 
                         if current_word.is_horizontal:
-                            binary = self.check_word_fits_in_grid_and_place_it(current_word, (self.words[index_in_grids_words].first_letter_position[0]+c, self.words[index_in_grids_words].first_letter_position[1]), impossible_positions)
+                            binary = self.check_word_fits_in_grid_and_place_it(
+                                current_word,
+                                (
+                                    self.words[
+                                        index_in_grids_words
+                                    ].first_letter_position[0]
+                                    + c,
+                                    self.words[
+                                        index_in_grids_words
+                                    ].first_letter_position[1],
+                                ),
+                                impossible_positions,
+                            )
 
-                            current_word.first_letter_position = (self.words[index_in_grids_words].first_letter_position[0]+c, self.words[index_in_grids_words].first_letter_position[1]-(current_word.name.index(self.words[index_in_grids_words].name[c])))
+                            current_word.first_letter_position = (
+                                self.words[index_in_grids_words].first_letter_position[
+                                    0
+                                ]
+                                + c,
+                                self.words[index_in_grids_words].first_letter_position[
+                                    1
+                                ]
+                                - (
+                                    current_word.name.index(
+                                        self.words[index_in_grids_words].name[c]
+                                    )
+                                ),
+                            )
                         else:
-                            binary = self.check_word_fits_in_grid_and_place_it(current_word, (self.words[index_in_grids_words].first_letter_position[0], self.words[index_in_grids_words].first_letter_position[1]+c), impossible_positions)
+                            binary = self.check_word_fits_in_grid_and_place_it(
+                                current_word,
+                                (
+                                    self.words[
+                                        index_in_grids_words
+                                    ].first_letter_position[0],
+                                    self.words[
+                                        index_in_grids_words
+                                    ].first_letter_position[1]
+                                    + c,
+                                ),
+                                impossible_positions,
+                            )
 
-                            current_word.first_letter_position = (self.words[index_in_grids_words].first_letter_position[0]-(current_word.name.index(self.words[index_in_grids_words].name[c])), self.words[index_in_grids_words].first_letter_position[1]+c)
+                            current_word.first_letter_position = (
+                                self.words[index_in_grids_words].first_letter_position[
+                                    0
+                                ]
+                                - (
+                                    current_word.name.index(
+                                        self.words[index_in_grids_words].name[c]
+                                    )
+                                ),
+                                self.words[index_in_grids_words].first_letter_position[
+                                    1
+                                ]
+                                + c,
+                            )
 
             if not binary:
                 return False
 
             else:
-                impossible_positions.append((self.words[index_in_grids_words].first_letter_position[0] + c, self.words[index_in_grids_words].first_letter_position[1]))
+                impossible_positions.append(
+                    (
+                        self.words[index_in_grids_words].first_letter_position[0] + c,
+                        self.words[index_in_grids_words].first_letter_position[1],
+                    )
+                )
                 binary = False
                 self.words.append(current_word)
                 words_list.remove(current_word)

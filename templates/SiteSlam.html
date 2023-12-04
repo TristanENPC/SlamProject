@@ -18,14 +18,16 @@
         <main>
             <div class="container_main">
                 <img id="screen_start" src="../static/ScreenStart.jpg" alt="Image de chargement du jeu" title="Start Screen">
-                <button id="test" onclick="envoyerRequete()">TEST</button>
+                <button id="test" onclick="envoyerRequete()">START</button>
                 <form action="/traiter_formulaire" method="post">
-                    <label for="champ_texte">Entrez une chaîne de caractères :</label>
+                    <label for="champ_texte">Réponse sous le format 0confetti :</label>
                     <input type="text" id="champ_texte" name="champ_texte" required>
                     <button type="submit">Soumettre</button>
-                </form>    
-            </div>                   
-            <div id="message" class="container_grid"></div>
+                </form>
+                <p>{% raw %}{% endraw %}</p>    
+            </div>
+            <div id="message2" class="container_grid">{{ message2 | safe }}</div>                   
+            <div id="message" class="container_grid">{{ message | safe }}</div>
         </main>
         <footer class="container_footer">
             <img id="logo_min" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">

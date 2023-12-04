@@ -476,6 +476,7 @@ class Grid:
 
         return True
 
+
     def generate(self, words_list):
         """
         It generates an available grid with the words from words_list which means it modifies the table attribute from the grid object

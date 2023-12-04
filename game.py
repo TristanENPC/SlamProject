@@ -8,8 +8,9 @@ import question
 # import threading
 import random
 
-
-
+def ask_player():
+    answer = input("Quelle est votre réponse ?")
+    return(int(answer[0]),answer[1:])
 
 def init_questions(repert):
     """
@@ -160,6 +161,36 @@ class Game:
             for j in range(final_grid.shape[1]):
                 if self.grid.table[i,j] in given_letters :
                     self.grid.shown_table[i,j] = self.grid.table[i,j]
+                
+    def turn_from_final(self,champ_texte):
+        if not champ_texte[0].isdigit() :
+            return("Mauvaise saisie !")
+        number_word = int(champ_texte[0])
+        answer = champ_texte[1:]
+        if answer==self.grid.words[number_word].name :
+            message2 = "Bonne réponse !"
+            word = self.grid.words[number_word]
+            if word.is_horizontal:
+                for j in range(
+                    word.first_letter_position[1],
+                    word.first_letter_position[1] + word.length,
+                ):
+                    self.grid.shown_table[
+                        word.first_letter_position[0], j
+                    ] = self.grid.table[word.first_letter_position[0], j]
+            if word.is_vertical:
+                for i in range(
+                    word.first_letter_position[0],
+                    word.first_letter_position[0] + word.length,
+                ):
+                    self.grid.shown_table[
+                        i, word.first_letter_position[1]
+                    ] = self.grid.table[i, word.first_letter_position[1]]
+        else:
+            message2 = "Mauvaise réponse !"
+        return message2
+         
+         
             
     def final_turn(self):
         
@@ -173,8 +204,7 @@ class Game:
         temps_ecoule = 0
         
         while (not self.grid.comparate_grids()) and temps_ecoule < 60:
-            number_word = int(input("Quel mot voulez-vous deviner ?"))
-            answer = input("Quelle est votre réponse ?")
+            number_word, answer = ask_player()
             if answer==self.grid.words[number_word].name :
                 print("Bonne réponse !")
                 word = self.grid.words[number_word]

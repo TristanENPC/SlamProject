@@ -69,6 +69,10 @@ class Grid:
         self._letters = []
 
     @property
+    def size(self):
+        return self._size
+
+    @property
     def table(self):
         return self._table
 
@@ -95,25 +99,27 @@ class Grid:
 
     def add_word_to_shown_table(self, w):
         # IL FAUT METTRE UNE ERREUR SI LE MOT N'APPARTIENT PAS A grid._words
+        c = 0
         for i in range(len(self.words)):
-            word = ""
             if self.words[i].name == w:
                 word = self.words[i]
-        if word.is_horizontal():
-            line = word.first_letter_position()[0]
+        if word.is_horizontal:
+            line = word.first_letter_position[0]
             for col in range(
-                word.first_letter_position()[1],
-                word.first_letter_position()[1] + word.lenght,
+                word.first_letter_position[1],
+                word.first_letter_position[1] + word.length,
             ):
-                self.shown_table[line][col] = word[col]
+                self.shown_table[line][col] = word.name[c]
+                c += 1
         else:
-            assert word.is_vertical()
-            col = word.first_letter_position()[1]
+            assert word.is_vertical
+            col = word.first_letter_position[1]
             for line in range(
-                word.first_letter_position()[0],
-                word.first_letter_position()[0] + word.lenght,
+                word.first_letter_position[0],
+                word.first_letter_position[0] + word.length,
             ):
-                self.shown_table[line][col] = word[line]
+                self.shown_table[line][col] = word.name[c]
+                c += 1
 
     def display(self):
         '''
@@ -645,4 +651,13 @@ class Grid:
                 binary = False
                 self.words.append(current_word)
                 words_list.remove(current_word)
+
+        L = []
+        for w in self.words:
+            for i in range(len(w.name)):
+                L.append(w.name[i])
+        L =list(set(L))
+        for l in L :
+            self.letters.append(l)
+
         return True

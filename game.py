@@ -247,27 +247,30 @@ class Game:
         # Si personne buzz :
         #       print("Personne n'a buzzé. \n Elle ne pourra donc plus être trouvée. Le tour est terminé.")
         #       break
-        p = input("Entrez votre numéro de joueur")
+        p = int(input("Entrez votre numéro de joueur"))
         letter = input("Vous avez 10 secondes pour répondre une lettre.")
         # 10 seconds timer to answer the question
         # si les 10 secondes sont passées
         # letter = " "
         # turn_losers.append(p)
         while letter != question.answer:
+            
             print("Mauvaise réponse...")
             turn_losers.append(p)
-            if turn_losers == self.list_player:
-                self.grid.letters.remove(question.answer())
+            if len(turn_losers) == len(self.list_player):
+                self.grid.letters.remove(question.answer)
                 print("Aucun joueur n'a trouvé la lettre. \n Elle ne pourra donc plus être trouvée. Le tour est terminé.")
-                break
+                return None
+            
             input("Les autres joueurs peuvent retenter de deviner la lettre. \n Appuyez sur la touche 'enter' pour buzzer.")
             # Si personne buzz :
             #       print("Personne n'a buzzé. \n Elle ne pourra donc plus être trouvée. Le tour est terminé.")
             #       break
-            p = input("Entrez votre numéro de joueur")
+            p = int(input("Entrez votre numéro de joueur"))
             while p in turn_losers:
+                
                 input("Vous n'avez plus le droit de jouer pendant ce tour. \n Les autres joueurs peuvent retenter de deviner la lettre. \n Appuyez sur la touche 'enter' pour buzzer.")
-                p = input("Entrez votre numéro de joueur")
+                p = int(input("Entrez votre numéro de joueur"))
             letter = input("Vous avez 10 secondes pour répondre une lettre.") 
             # 10 seconds timer to answer the question
             # si les 10 secondes sont passées :
@@ -279,28 +282,28 @@ class Game:
         self.grid.add_letter_to_shown_table(letter)
         self.grid.display_shown()
         print("Saisissez le numéro du mot que vous souhaitez deviner.")
-        word_to_guess = input()
+        word_to_guess = int(input())
         assert type(word_to_guess) == int
-        while letter not in self.words[word_to_guess].name():
-            word_to_guess = input("Vous ne pouvez pas deviner ce mot \n car il ne contient pas la lettre que vous venez de trouver. \n Veuillez saisir le numéro d'un autre mot.")
+        while letter not in self.grid.words[word_to_guess].name:
+            word_to_guess = int(input("Vous ne pouvez pas deviner ce mot \n car il ne contient pas la lettre que vous venez de trouver. \n Veuillez saisir le numéro d'un autre mot."))
         print("Voici la défintition du mot que vous souhaitez deviner :")
-        print(self.words[word_to_guess].definition())
+        print(self.grid.words[word_to_guess].definition)
         print("Vous avez 20 secondes pour répondre un mot.")
         # 20 seconds timer to answer the question
         answer = input()
         # si les 20 secondes sont passées :
         #       print("Les 20 secondes sont écoulées. Vous n'avez pas trouvé le mot. Le tour est terminé.")
         #       break
-        if answer == self.words[word_to_guess].name:
+        if answer == self.grid.words[word_to_guess].name:
             print("Réponse correcte!")
             self.grid.add_word_to_shown_table(answer)
             self.grid.display_shown()
-            self.list_player[p].points(self.list_player[p].points()+len(answer))
+            self.list_player[p].points = self.list_player[p].points+len(answer)
             # self.list_player[p].points() += len(answer)
-            print("Le tour est terminé.")
-        print("Mauvaise réponse...")
+        else :
+            print("Mauvaise réponse...")
         print("Le tour est terminé.")
-        break
+        #break
 
 
 questions = init_questions("questions.txt")

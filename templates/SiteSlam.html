@@ -9,25 +9,27 @@
     <body>
         <header>
             <img id="logo" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">
+            <img id="logo2" src="../static/PontsLogo.png" alt="Logo de l'ecole des Ponts" title="Logo Ponts">
         </header>
         <nav class="container_nav">
-            <div class="bouton"> <a href="SiteSlam.html">Mode 1 joueur</a> </div>
-            <div class="bouton"> <a href="Training.html">Mode 2 joueurs</a> </div>
-            <div class="bouton"> <a href="SiteSlamPage3.html">Mode 3 joueurs</a> </div>
+            <div class="score">Joueur 0 : {{ score1 | safe }}</div>
+            <div class="score">Joueur 1 : {{ score2 | safe }}</div>
+            <div class="score">Joueur 2 : {{ score3 | safe }}</div>
         </nav>
         <main>
             <div class="container_main">
-                <img id="screen_start" src="../static/ScreenStart.jpg" alt="Image de chargement du jeu" title="Start Screen">
-                <button id="test" onclick="envoyerRequete()">START</button>
+                <button id="test" onclick="envoyerRequeteStart()">START</button>
+                <button id="test" onclick="envoyerRequete()">FINAL</button>
+                <button id="test" onclick="envoyerBuzz()">BUZZ</button>
                 <form action="/traiter_formulaire" method="post">
                     <label for="champ_texte">Réponse sous le format 0confetti :</label>
                     <input type="text" id="champ_texte" name="champ_texte" required>
                     <button type="submit">Soumettre</button>
                 </form>
                 <p>{% raw %}{% endraw %}</p>    
-            </div>
-            <div id="message2" class="container_grid">{{ message2 | safe }}</div>                   
+            </div>                            
             <div id="message" class="container_grid">{{ message | safe }}</div>
+            <div id="message2" class="container_grid">{{ message2 | safe }}</div>  
         </main>
         <footer class="container_footer">
             <img id="logo_min" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">

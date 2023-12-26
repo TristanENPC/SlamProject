@@ -9,9 +9,15 @@ header {
     padding : 1em;
 }
 
+#logo2 {
+    height : 6em;
+    width : 5em;
+    padding : 1em;
+}
+
 body {
     /*background-image: url('bg.png');*/
-    background-color: white;
+    background-color: rgb(253, 249, 150);
 }
 
 #logo_min {
@@ -31,6 +37,7 @@ body {
 #test {
     width : 30em;
 }
+
 
 .container_nav {
     display : flex;
@@ -61,7 +68,7 @@ body {
     display: flex;
     flex-direction : row;
     justify-content: center;
-    border-top : 0.1em white solid;
+    border-top : 0.1em rgb(253, 249, 150);
     align-items: center;
     padding-top : 0.5em;
 }

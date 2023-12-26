@@ -88,6 +88,10 @@ class Grid:
     def letters(self):
         return self._letters
 
+    @letters.setter
+    def letters(self,v):
+        self._letters = v
+
     def give_grid(self, G):
         self._table = G
 

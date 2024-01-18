@@ -18,11 +18,7 @@ function envoyerRequeteStart() {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            // Update the content of the grid with the response received from the server
-            document.getElementById('message').innerHTML = xhr.responseText;
-
-            // Hide or show the start button based on the boolean variable
-            var startButton = document.getElementById("startButton");
+            window.location.href = '/base';
         }
     };
 
@@ -35,8 +31,8 @@ function envoyerBuzz() {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            // Update the content of the grid with the response received from the server
-            document.getElementById('message2').innerHTML = xhr.responseText;
+            // Mettez à jour le contenu de la grille avec la réponse reçue du serveur
+            document.getElementById('message').innerHTML = xhr.responseText;
         }
     };
 

@@ -1,26 +1,61 @@
-Quelle est la 1e lettre de l alphabet ? - a
-Quelle est la 2e lettre de l alphabet ? - b
-Quelle est la 3e lettre de l alphabet ? - c
-Quelle est la 4e lettre de l alphabet ? - d
-Quelle est la 5e lettre de l alphabet ? - e
-Quelle est la 6e lettre de l alphabet ? - f
-Quelle est la 7e lettre de l alphabet ? - g
-Quelle est la 8e lettre de l alphabet ? - h
-Quelle est la 9e lettre de l alphabet ? - i
-Quelle est la 10e lettre de l alphabet ? - j
-Quelle est la 11e lettre de l alphabet ? - k
-Quelle est la 12e lettre de l alphabet ? - l
-Quelle est la 13e lettre de l alphabet ? - m
-Quelle est la 14e lettre de l alphabet ? - n
-Quelle est la 15e lettre de l alphabet ? - o
-Quelle est la 16e lettre de l alphabet ? - p
-Quelle est la 17e lettre de l alphabet ? - q
-Quelle est la 18e lettre de l alphabet ? - r
-Quelle est la 19e lettre de l alphabet ? - s
-Quelle est la 20e lettre de l alphabet ? - t
-Quelle est la 21e lettre de l alphabet ? - u
-Quelle est la 22e lettre de l alphabet ? - v
-Quelle est la 23e lettre de l alphabet ? - w
-Quelle est la 24e lettre de l alphabet ? - x
-Quelle est la 25e lettre de l alphabet ? - y
-Quelle est la 26e lettre de l alphabet ? - z
+Boucle la ceinture - e
+Quelle lettre manque dans le nom de cette capitale haoi - n
+Il se refugie dans l'abri d'un calabrais - a
+De la que nait le koala - k
+Quelle lettre manque deux fois au nom de cet arbuste aux fleurs mauves et tres odorantes ias - l
+Quelle consonne est entre deux consonnes dans la technologie - h
+Quelle est la derniere lettre du mot correspondant au l dans le signe bancaire francais p.e.l. - t
+Quelle voyelle est unique dans le mot qui termine l'expression - petit a petit l'oiseau fait son ... - i
+Quelle lettre figure deux fois dans le nom du pays ou est ne l'ecrivain gabriel garcia marquez - o
+Quelle lettre complete ce sigle qui signifie que tout va bien ou qu'il n'y a rien a signaler ra - s
+Une fois dans la faucille, deux fois dans le marteau... - a
+Quelle lettre manque-t-il deux fois a ce mot crol pour en faire des boucles d'oreilles - e
+Quelle lettre manque trois fois a cet element chimique tres abondant dans la croute terrestre slcum - i
+Quelle lettre figure a la meme place dans l'heritage et dans la donation - t
+Quelle lettre occupe le plus de postes au commandement - m
+Il est le plus souvent en derangement - e
+En tete du wagon - w
+Derniere consonne dans alphabetique - q
+Un grain de poudre qui entre dans un baril - r
+Quelle lettre ne figure qu'une fois dans un falafel - e
+Quelle lettre doit remplacer le c des cieux pour qu'on apercoive zeus et ses semblables - d
+Queue de pie ... - e
+Figaro, une fois depouille de tout ce qui fait le barbier et le coiffeur ... - g
+Consonne dans timide mais pas dans amidon - t
+Quelle lettre doit remplacer un e du reve pour aller danser sur de la musique techo - a
+Quelle est la seule lettre entouree par deux voyelles dans le mot entregent - g
+Quelle consonne figure autant de fois que le a dans le mot plaisantin - n
+Quelle lettre doit remplacer un e du reve pour aller danser sur de la musique techno - a
+Quelle est la seule lettre entouree par deux voyelles dans le mot entregent - g
+Quelle consonne figure autant de fois que le a dans le mot plaisantin - n
+Quelle lettre est la plus repetee dans le mot illumination - i
+Meneuse de revue - r
+Consonne a la frontiere de l'irak - k
+Quelle lettre manque au nom de cet officier qui, au moyen age, transmettait les messages - r
+Quelle lettre est repetee dans le mot aumoniere - e
+Un bout de pneu au bord de la voie - e
+Deux fois dans le romarin que dans le persil ... - r
+Quelle lettre est la plus repetee dans le mot caracterisation - a
+Quelle lettre est repetee dans le mot vinaigre - i
+Meme score a la belote et a la crapette... - e
+Quelle est la premiere lettre du nom designant une grosse bille et une coiffure militaire - c
+Quelle est la premiere lettre du mot qui termine le titre de la serie culte la petite maison dans la... - p
+Quelle voyelle de la gouttiere ne tombe pas dans le caniveau - o
+Quelle est l'avant-derniere lettre du mot qui designe un habitant de la region de berry - o
+Quelle lettre est doublee chez un pygmee - e
+Quelle lettre figure 3 fois dans le nom du realisateur du film les choristes ? - r
+Quelle lettre doit-on ajouter a des baies pour porter des pantalons gaulois - r
+Quelle voyelle de derisoire ne tourne pas au ridicule - o
+Voyelle une fois dans jupiter mais deux fois dans uranus - u
+Consonne a la fois sur jupiter et uranus - r
+Quelle est l'initiale du prenom du compositeur schubert - f
+Quelle est la derniere lettre du nom qui designe un habitant du bengale - i
+Consonne a la frontiere de la somalie - s
+Entree en matiere - m
+Consonne qui vient et revient dans le yoyo - y
+Il acheve bien les chevaux - x
+Initie la juxtaposition - j
+En resume et en conclusion, mais pas en somme - u
+Par quelle lettre doit-on remplacer fr de fredaine pour un avoir un gros ventre - b
+A l'entree du village - v
+A la frontiere du zimbabwe mais pas de l'ethiopie - z

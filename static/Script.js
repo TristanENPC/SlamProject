@@ -18,8 +18,7 @@ function envoyerRequeteStart() {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            // Mettez à jour le contenu de la grille avec la réponse reçue du serveur
-            document.getElementById('message').innerHTML = xhr.responseText;
+            window.location.href = '/base';
         }
     };
 
@@ -33,7 +32,7 @@ function envoyerBuzz() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             // Mettez à jour le contenu de la grille avec la réponse reçue du serveur
-            document.getElementById('message2').innerHTML = xhr.responseText;
+            document.getElementById('message').innerHTML = xhr.responseText;
         }
     };
 

@@ -12,24 +12,24 @@
             <img id="logo2" src="../static/PontsLogo.png" alt="Logo de l'ecole des Ponts" title="Logo Ponts">
         </header>
         <nav class="container_nav">
-            <div class="score">Joueur 0 : {{ score1 | safe }}</div>
-            <div class="score">Joueur 1 : {{ score2 | safe }}</div>
-            <div class="score">Joueur 2 : {{ score3 | safe }}</div>
+            Slam, le jeu
         </nav>
         <main>
             <div class="container_main">
                 <button id="test" onclick="envoyerRequeteStart()">START</button>
-                <button id="test" onclick="envoyerRequete()">FINAL</button>
-                <button id="test" onclick="envoyerBuzz()">BUZZ</button>
-                <form action="/traiter_formulaire" method="post">
-                    <label for="champ_texte">Réponse sous le format 0confetti :</label>
-                    <input type="text" id="champ_texte" name="champ_texte" required>
-                    <button type="submit">Soumettre</button>
-                </form>
                 <p>{% raw %}{% endraw %}</p>    
-            </div>                            
-            <div id="message" class="container_grid">{{ message | safe }}</div>
-            <div id="message2" class="container_grid">{{ message2 | safe }}</div>  
+            </div> 
+            <div class="container_text">
+                Bienvenue sur ce site qui va te permettre de jouer au fameux jeu Slam présenté par Cyril Féraud. Pour cette version en ligne voilà comment tu vas pouvoir 
+            procéder. <br> Vous devez être 3 sur la même machine et suivre la procédure suivante : <br>
+            - Une question va s'afficher. Il faut cliquer sur le bouton "BUZZ". <br>
+            - Puis indiquer dans la barre de saise le numéro du joueur qui vient de buzzer. <br>
+            - Ensuite, il faut entrer la réponse à la question. <br>
+            - Si la réponse est correcte, les lettres s'affichent dans la grille et vous devez saisir le numéro du mot que vous voulez deviner. <br> 
+            - Saisissez ensuite la réponse. <br>
+            - Si le mot est correct, il s'affiche dans la grille. <br>
+            - Vous avez alors la possibilité de Slamer ou de continuer la manche.
+            </div>            
         </main>
         <footer class="container_footer">
             <img id="logo_min" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">

@@ -86,6 +86,22 @@ class Game:
         self._is_guessing_word = False
         self._guessed_word = ''
         self._turn_losers = []
+        self._SomeoneWantsSlaming = False
+        self._isSomeoneSlaming = False
+        
+    @property
+    def SomeoneWantsSlaming(self):
+        return self._SomeoneWantsSlaming
+        
+    def SomeoneWantsSlam(self):
+        self._SomeoneWantsSlaming = not self.SomeoneWantsSlaming
+        
+    @property
+    def isSomeoneSlaming(self):
+        return self._isSomeoneSlaming
+        
+    def isSomeoneSlaming(self):
+        self._isSomeoneSlaming = not self.isSomeoneSlaming
         
     @property
     def turn_losers(self):
@@ -185,24 +201,11 @@ class Game:
     def pull_grid(self, table):
         """get a grid already generated"""
         self._grid = table
-
-    def slam(self, player):
-        """
-        If a player does a slam, it looks if he's right. Else he looses.
-        """
-        self.grid.display_shown()
-        number_word = int(input("Quel mot voulez-vous deviner ?"))
-        answer = input("Quelle est votre réponse ?")
-        points = 0
-
-        while answer == self.grid.words[number_word].name and (
-            not self.grid.comparate_grids()
-        ):
-            print("Bonne réponse !")
-
-            # afficher le mot dans la grille
-            word = self.grid.words[number_word]
-            points += word.length
+        
+    def check_slam(self, player, word_nb, word_name):
+        if self.grid.words[word_nb].name == word_name :
+            self.list_player[player].points = self.list_player[player].points+len(word_name)
+            word = self.grid.words[word_nb]
             if word.is_horizontal:
                 for j in range(
                     word.first_letter_position[1],
@@ -219,18 +222,90 @@ class Game:
                     self.grid.shown_table[
                         i, word.first_letter_position[1]
                     ] = self.grid.table[i, word.first_letter_position[1]]
+            message = "Ensuite ?"
+        else :
+            message = "perdu"
+        return message
 
-            self.grid.display_shown()
-            number_word = int(input("Quel mot voulez-vous deviner ?"))
-            answer = input("Quelle est votre réponse ?")
+    def load_turn(self) :
+        grid_generated = False
+        while not grid_generated:
+            G = grid.Grid(10, 10)
+            grid_generated = G.generate(words)
+            G.full_shown_table()
+        jeu.pull_grid(G)
+            
+    def turn_set(self, list_questions):
+        self.turn_losers = []
+        self.current_question = list_questions[random.randrange(len(list_questions))]
+        while self.current_question.answer not in self.grid.letters:
+            self.current_question = list_questions[random.randrange(len(list_questions))]
+        return(self.current_question.title)
+        
+    def turn(self):
+        
+        p = self.player_is_playing
+        letter = self.guessed_letter
+        question = self.current_question
+        
+        if letter != question.answer:
+            l = self.turn_losers
+            l.append(p)
+            self.turn_losers = list(set(l))
+            m = self.grid.display_shown_site()
+            
+            if len(self.turn_losers) == len(self.list_player):
+                l = self.grid.letters
+                for i in range(len(l)):
+                    if l[i] == question.answer :
+                        l.remove(l[i])
+                        break
+                self.grid.letters = l
+                
+                return(False,"Aucun joueur n'a trouvé la lettre. \n Elle ne pourra donc plus être trouvée. Le tour est terminé.",m)
+            
+            return(False,"Mauvaise réponse",m)
 
-        if self.grid.comparate_grids():
-            player.points += points
-        else:
-            player.points = 0
-            print("Vous avez raté votre Slam")
-            self.list_player.remove(player)
+        assert (letter == question.answer)
+        self.grid.add_letter_to_shown_table(letter)
+        l = self.grid.letters
+        for i in range(len(l)):
+            if l[i] == question.answer :
+                l.remove(l[i])
+                break
+        self.grid.letters = l
+        m = self.grid.display_shown_site()
+        return(True,"Réponse correcte! Quel mot veux-tu deviner ?",m)
+        
+    def turn_2(self):
+        p = self.player_is_playing
+        letter = self.guessed_letter
+        try :
+            word_to_guess = int(self.chosen_word)
+        except ValueError :
+            return("Veuillez entrer un choix de mot valide.")
+        assert type(word_to_guess) == int
+        if letter not in self.grid.words[word_to_guess].name:
+            return ("Vous ne pouvez pas deviner ce mot")
+        return("Voici la défintition du mot que vous souhaitez deviner : "+self.grid.words[word_to_guess].definition+" Vous avez 20 secondes pour répondre un mot.")
+        
+    def turn_3(self):
+        answer = self.guessed_word
+        word_to_guess = int(self.chosen_word)
+        p = self.player_is_playing
+        if answer == self.grid.words[word_to_guess].name:
+            self.grid.add_word_to_shown_table(answer)
+            
+            
+            self.list_player[p].points = self.list_player[p].points+len(answer)
+            return("Réponse correcte!")
+        else :
+            return("Mauvaise réponse...")
+        
 
+
+        
+        
     def load_final(self):
         self.become_final()
         # On charge la grille de la finale
@@ -329,96 +404,6 @@ class Game:
             print('Bravo')
         else :
             print('Temps écoulé !')
-            
-    def turn_set(self, list_questions):
-        self.turn_losers = []
-        self.current_question = list_questions[random.randrange(len(list_questions))]
-        while self.current_question.answer not in self.grid.letters:
-            self.current_question = list_questions[random.randrange(len(list_questions))]
-        return(self.current_question.title)
-        
-    def turn(self):
-        
-        p = self.player_is_playing
-        letter = self.guessed_letter
-        question = self.current_question
-        
-        if letter != question.answer:
-            l = self.turn_losers
-            l.append(p)
-            self.turn_losers = list(set(l))
-            m = self.grid.display_shown_site()
-            
-            if len(self.turn_losers) == len(self.list_player):
-                l = self.grid.letters
-                for i in range(len(l)):
-                    if l[i][0] == question.answer :
-                        l.remove(l[i])
-                        break
-                self.grid.letters = l
-                
-                return(False,"Aucun joueur n'a trouvé la lettre. \n Elle ne pourra donc plus être trouvée. Le tour est terminé.",m)
-            
-            return(False,"Mauvaise réponse",m)
-
-        assert (letter == question.answer)
-        self.grid.add_letter_to_shown_table(letter)
-        l = self.grid.letters
-        for i in range(len(l)):
-            if l[i][0] == question.answer :
-                l.remove(l[i])
-                break
-        self.grid.letters = l
-        m = self.grid.display_shown_site()
-        return(True,"Réponse correcte! Quel mot veux-tu deviner ?",m)
-        
-    def turn_2(self):
-        p = self.player_is_playing
-        letter = self.guessed_letter
-        try :
-            word_to_guess = int(self.chosen_word)
-        except ValueError :
-            return("Veuillez entrer un choix de mot valide.")
-        assert type(word_to_guess) == int
-        if letter not in self.grid.words[word_to_guess].name:
-            return ("Vous ne pouvez pas deviner ce mot")
-        return("Voici la défintition du mot que vous souhaitez deviner : "+self.grid.words[word_to_guess].definition+" Vous avez 20 secondes pour répondre un mot.")
-        
-    def turn_3(self):
-        answer = self.guessed_word
-        word_to_guess = int(self.chosen_word)
-        p = self.player_is_playing
-        if answer == self.grid.words[word_to_guess].name:
-            self.grid.add_word_to_shown_table(answer)
-            
-            '''
-            for i in range(len(self.grid.words)):
-                if self.grid.words[i].name == answer :
-                    self.grid.words[i] = grid.Word('','')
-                    break
-            L = []
-            for w in self.grid.words:
-                for i in range(len(w.name)):
-                    L.append(w.name[i])
-            L =list(set(L))
-            L2 = []
-            for l in L :
-                L2.append(l)
-            self.grid.letters = L2
-            '''
-            
-            self.list_player[p].points = self.list_player[p].points+len(answer)
-            return("Réponse correcte!")
-        else :
-            return("Mauvaise réponse...")
-        
-    def load_turn(self) :
-        grid_generated = False
-        while not grid_generated:
-            G = grid.Grid(10, 10)
-            grid_generated = G.generate(words)
-            G.full_shown_table()
-        jeu.pull_grid(G)
 
 
 questions = init_questions("questions.txt")

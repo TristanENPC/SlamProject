@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, Response
 import game
-# cd Documents/ENPC/2A/TDLOG/Projet_TDLOG/SlamProject
-
 
 app = Flask(__name__)
 
@@ -44,7 +42,6 @@ def traiter_formulaire():
         message2 = game.jeu.grid.display_shown_site()
         return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2)
 
-
     elif request.method == 'POST' and not game.jeu.is_final:
 
         #if game.jeu.grid.comparate_grids():
@@ -55,9 +52,9 @@ def traiter_formulaire():
                 champ_texte = request.form['champ_texte']
                 game.jeu.player_is_playing = int(champ_texte)
                 if len(game.jeu.turn_losers) == len(game.jeu.list_player) :
-                    message3 = "Prochaine question : "+game.jeu.turn_set(game.questions)
+                    message = "Prochaine question : "+game.jeu.turn_set(game.questions)
                 elif game.jeu.player_is_playing in game.jeu.turn_losers :
-                    message3 = "Vous ne pouvez plus jouer."
+                    message = "Vous ne pouvez plus jouer."
                 else :
                     game.jeu.guess_letter()
                     message2 = game.jeu.grid.display_shown_site()
@@ -67,10 +64,10 @@ def traiter_formulaire():
                 score2 = game.jeu.list_player[1].points
                 score3 = game.jeu.list_player[2].points
             except ValueError :
-                message3 = "Ce n'est pas un chiffre acceptable"
+                message = "Ce n'est pas un chiffre acceptable"
                 game.jeu.choose_player()
-            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message,message2=message2,score1=score1,score2=score2,score3=score3)
 
+            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message,message2=message2,score1=score1,score2=score2,score3=score3)
 
         elif game.jeu.is_guessing_letter :
             champ_texte = request.form['champ_texte']
@@ -86,8 +83,8 @@ def traiter_formulaire():
                 if message == "Aucun joueur n'a trouvé la lettre. \n Elle ne pourra donc plus être trouvée. Le tour est terminé." :
                     message = "Personne n'a trouvé, prochaine question : "+game.jeu.turn_set(game.questions)
                 game.jeu.guess_letter()
-            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
 
+            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
 
         elif game.jeu.is_choosing_word :
             score1 = game.jeu.list_player[0].points
@@ -101,7 +98,6 @@ def traiter_formulaire():
                 game.jeu.guess_word()
                 game.jeu.end_choosing_word()
             return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
-
 
         elif game.jeu.is_guessing_word :
             champ_texte = request.form['champ_texte']

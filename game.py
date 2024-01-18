@@ -88,7 +88,23 @@ class Game:
         self._turn_losers = []
         self._SomeoneWantsSlaming = False
         self._isSomeoneSlaming = False
+        self._SomeoneBuzzed = False
+        self._EndTurn = False
         
+    @property
+    def EndTurn(self):
+        return self._EndTurn
+        
+    def InverseEndTurn(self):
+        self._EndTurn = not self.EndTurn
+
+    @property
+    def SomeoneBuzzed(self):
+        return self._SomeoneBuzzed
+        
+    def InverseSomeoneBuzzed(self):
+        self._SomeoneBuzzed = not self.SomeoneBuzzed
+    
     @property
     def SomeoneWantsSlaming(self):
         return self._SomeoneWantsSlaming
@@ -100,7 +116,7 @@ class Game:
     def isSomeoneSlaming(self):
         return self._isSomeoneSlaming
         
-    def isSomeoneSlaming(self):
+    def isSomeoneSlam(self):
         self._isSomeoneSlaming = not self.isSomeoneSlaming
         
     @property
@@ -203,7 +219,8 @@ class Game:
         self._grid = table
         
     def check_slam(self, player, word_nb, word_name):
-        if self.grid.words[word_nb].name == word_name :
+        if self.grid.words[word_nb].name == word_name and word_nb not in self.grid.words_discovered :
+            self.grid.words_discovered.append(word_nb)
             self.list_player[player].points = self.list_player[player].points+len(word_name)
             word = self.grid.words[word_nb]
             if word.is_horizontal:
@@ -222,7 +239,9 @@ class Game:
                     self.grid.shown_table[
                         i, word.first_letter_position[1]
                     ] = self.grid.table[i, word.first_letter_position[1]]
-            message = "Ensuite ?"
+            message = "Bonne réponse ! Ensuite ?"
+        elif self.grid.words[word_nb].name == word_name and word_nb in self.grid.words_discovered :
+            message = "Ce mot a déjà était trouvé. Essayez un autre."
         else :
             message = "perdu"
         return message
@@ -264,7 +283,7 @@ class Game:
                 
                 return(False,"Aucun joueur n'a trouvé la lettre. \n Elle ne pourra donc plus être trouvée. Le tour est terminé.",m)
             
-            return(False,"Mauvaise réponse",m)
+            return(False,"Mauvaise réponse du joueur"+str(self.player_is_playing)+" Les autres peut-être ? "+self.current_question.title,m)
 
         assert (letter == question.answer)
         self.grid.add_letter_to_shown_table(letter)
@@ -285,7 +304,7 @@ class Game:
         except ValueError :
             return("Veuillez entrer un choix de mot valide.")
         assert type(word_to_guess) == int
-        if letter not in self.grid.words[word_to_guess].name:
+        if letter not in self.grid.words[word_to_guess].name or word_to_guess in self.grid.words_discovered:
             return ("Vous ne pouvez pas deviner ce mot")
         return("Voici la défintition du mot que vous souhaitez deviner : "+self.grid.words[word_to_guess].definition+" Vous avez 20 secondes pour répondre un mot.")
         
@@ -293,12 +312,13 @@ class Game:
         answer = self.guessed_word
         word_to_guess = int(self.chosen_word)
         p = self.player_is_playing
-        if answer == self.grid.words[word_to_guess].name:
+        if answer == self.grid.words[word_to_guess].name :
             self.grid.add_word_to_shown_table(answer)
-            
+            self.grid.words_discovered.append(word_to_guess)
             
             self.list_player[p].points = self.list_player[p].points+len(answer)
             return("Réponse correcte!")
+            
         else :
             return("Mauvaise réponse...")
         

@@ -70,7 +70,7 @@ def traiter_formulaire():
         if game.jeu.is_choosing_player:
             try:
                 champ_texte = request.form['champ_texte']
-                
+
                 if int(champ_texte) < len(game.jeu.list_player):
                     game.jeu.player_is_playing = int(champ_texte)
 
@@ -169,7 +169,7 @@ def traiter_formulaire():
             except ValueError :
                 message = "Veuillez entrer la réponse sous le format 0reponse"
             message2 = game.jeu.grid.display_shown_site()
-            
+
             if message == 'perdu':
                 game.jeu.list_player[game.jeu.player_is_playing].points = 'Eliminate'
                 game.jeu.list_player[game.jeu.player_is_playing].block()

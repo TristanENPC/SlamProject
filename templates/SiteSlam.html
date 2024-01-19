@@ -8,15 +8,17 @@
     </head>
     <body>
         <header>
-            <img id="logo" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">
-            <img id="logo2" src="../static/PontsLogo.png" alt="Logo de l'ecole des Ponts" title="Logo Ponts">
-        </header>
+            <div id="logo-container">
+               <img id="logo" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">
+               <img id="logo2" src="../static/PontsLogo.png" alt="Logo de l'école des Ponts" title="Logo Ponts">
+            </div>
+         </header>         
         <nav class="container_nav">
             Slam, le jeu
         </nav>
         <main>
             <div class="container_main">
-                <button id="test" onclick="envoyerRequeteStart()">START</button>
+                <button id="buzz" onclick="envoyerRequeteStart()">START</button>
                 <p>{% raw %}{% endraw %}</p>    
             </div> 
             <div class="container_text">

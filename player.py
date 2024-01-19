@@ -21,8 +21,11 @@ class Player:
     def points(self, v):
         self._points = v
 
-    def change_blocked(self):
-        self._is_blocked = not self.is_blocked
+    def block(self):
+        self._is_blocked = False
+
+    def unblock(self):
+        self._is_blocked = True
 
 
 class HumanPlayer(Player):

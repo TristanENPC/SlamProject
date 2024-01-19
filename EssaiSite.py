@@ -7,6 +7,7 @@ app = Flask(__name__)
 def index():
     return render_template('SiteSlam.html')
 
+
 @app.route('/executer_fonction_buzz')
 def executer_fonction_buzz():
     game.jeu.choose_player()
@@ -20,18 +21,21 @@ def executer_fonction_python():
     message = game.jeu.grid.display_shown_site()
     return message
 
+
 @app.route('/executer_fonction_python_start')
 def executer_fonction_python_start():
     game.jeu.load_turn()
+    game.jeu.InverseSomeoneBuzzed()
     game.jeu.turn_set(game.questions)
-
     return render_template('SiteSlam2.html')
+
 
 @app.route('/base')
 def base():
     message = game.jeu.current_question.title
     message2 = game.jeu.grid.display_shown_site()
     return render_template('SiteSlam2.html', message=message, message2=message2)
+
 
 @app.route('/traiter_formulaire', methods=['POST'])
 def traiter_formulaire():
@@ -40,32 +44,54 @@ def traiter_formulaire():
         champ_texte = request.form['champ_texte']
         message = game.jeu.turn_from_final(champ_texte)
         message2 = game.jeu.grid.display_shown_site()
+        game.jeu.InverseEndTurn()
+
         return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2)
 
-    elif request.method == 'POST' and not game.jeu.is_final:
+    elif request.method == 'POST' and not game.jeu.is_final and not game.jeu.SomeoneBuzzed:
+        message = game.jeu.current_question.title
+        message2 = game.jeu.grid.display_shown_site()
+        score1 = game.jeu.list_player[0].points
+        score2 = game.jeu.list_player[1].points
+        score3 = game.jeu.list_player[2].points
+        return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message,message2=message2,score1=score1,score2=score2,score3=score3)
 
-        #if game.jeu.grid.comparate_grids():
-            #delete player with less point
+    elif request.method == 'POST' and not game.jeu.is_final and game.jeu.SomeoneBuzzed:
+
+        if game.jeu.grid.comparate_grids():
+            l_inter = []
+            for i in range(len(game.jeu.list_player)):
+                l_inter.append(game.jeu.list_player[i].points)
+            l_inter_arr = game.grid.np.array(l_inter)
+            indice = game.grid.np.argmin(l_inter_arr)
+            game.jeu.list_player[indice].points = 'Eliminate'
+            game.jeu.list_player[indice].block()
 
         if game.jeu.is_choosing_player:
             try:
                 champ_texte = request.form['champ_texte']
-                game.jeu.player_is_playing = int(champ_texte)
-                if len(game.jeu.turn_losers) == len(game.jeu.list_player):
-                    message = "Prochaine question : "+game.jeu.turn_set(game.questions)
-                elif game.jeu.player_is_playing in game.jeu.turn_losers:
-                    message = "Vous ne pouvez plus jouer."
-                else:
-                    game.jeu.guess_letter()
-                    message2 = game.jeu.grid.display_shown_site()
-                    message = game.jeu.current_question.title + " Quelle est votre réponse ?"
-                game.jeu.choose_player()
-                score1 = game.jeu.list_player[0].points
-                score2 = game.jeu.list_player[1].points
-                score3 = game.jeu.list_player[2].points
-            except ValueError:
-                message = "Ce n'est pas un chiffre acceptable"
-                game.jeu.choose_player()
+                
+                if int(champ_texte) < len(game.jeu.list_player):
+                    game.jeu.player_is_playing = int(champ_texte)
+
+                    if len(game.jeu.turn_losers) == len(game.jeu.list_player) :
+                        message = "Prochaine question : "+game.jeu.turn_set(game.questions)
+                    elif game.jeu.player_is_playing in game.jeu.turn_losers or game.jeu.list_player[game.jeu.player_is_playing].is_blocked :
+                        message = "Vous ne pouvez plus jouer. Les autres peut-être ? "+game.jeu.current_question.title
+                    else :
+                        game.jeu.guess_letter()
+                        message = game.jeu.current_question.title + " Quelle est votre réponse ?"
+                    game.jeu.choose_player()
+                else :
+                    message = "Ce n'est pas un chiffre acceptable. Veuillez entrer le numéro du joueur"
+
+            except ValueError :
+                message = "Ce n'est pas un chiffre acceptable. Veuillez entrer le numéro du joueur"
+
+            message2 = game.jeu.grid.display_shown_site()
+            score1 = game.jeu.list_player[0].points
+            score2 = game.jeu.list_player[1].points
+            score3 = game.jeu.list_player[2].points
 
             return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message,message2=message2,score1=score1,score2=score2,score3=score3)
 
@@ -118,28 +144,38 @@ def traiter_formulaire():
             score3 = game.jeu.list_player[2].points
             if champ_texte == "non" :
                 message = "Nouvelle question : "+game.jeu.turn_set(game.questions)
+                game.jeu.SomeoneWantsSlam()
+
+            elif champ_texte.isdigit() and int(champ_texte) < len(game.jeu.list_player) and not game.jeu.list_player[int(champ_texte)].is_blocked :
+                game.jeu.isSomeoneSlam()
+                message = "SLAAAAM du joueur "+champ_texte+" Rentrez les mots sous ce format 0reponse"
+                game.jeu.player_is_playing = int(champ_texte)
+                game.jeu.SomeoneWantsSlam()
 
             else :
-                game.jeu.isSomeoneSlaming()
-                message = "SLAAAAM du joueur "+champ_texte+" Rentrez les mots sous ce format 0confetti"
-                game.jeu.player_is_playing = int(champ_texte)
+                message = "Veuillez rentrer quelque chose de valide. Soit non soit un numéro de joueur"
 
             message2 = game.jeu.grid.display_shown_site()
-            game.jeu.SomeoneWantsSlam()
-            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2, score1=score1, score2=score2, score3=score3)
+
+            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2, score1=score1,score2=score2,score3=score3)
 
         elif game.jeu.isSomeoneSlaming:
             score1 = game.jeu.list_player[0].points
             score2 = game.jeu.list_player[1].points
             score3 = game.jeu.list_player[2].points
             champ_texte = request.form['champ_texte']
-            message = game.jeu.check_slam(game.jeu.player_is_playing, int(champ_texte[0]), champ_texte[1:])
+            try :
+                message = game.jeu.check_slam(game.jeu.player_is_playing,int(champ_texte[0]),champ_texte[1:])
+            except ValueError :
+                message = "Veuillez entrer la réponse sous le format 0reponse"
             message2 = game.jeu.grid.display_shown_site()
+            
             if message == 'perdu':
                 game.jeu.list_player[game.jeu.player_is_playing].points = 'Eliminate'
-                game.jeu.SomeoneWantsSlam()
-                game.jeu.load_turn()
-                message += ' ' + game.jeu.turn_set(game.questions)
+                game.jeu.list_player[game.jeu.player_is_playing].block()
+                game.jeu.InverseEndTurn()
+                game.jeu.isSomeoneSlam()
+                message += "On perd malheureusement le joueur "+str(game.jeu.player_is_playing) + " Entrer SUITE pour passer à la manche suivante"
             elif game.jeu.grid.comparate_grids() :
                 l_inter = []
                 for i in range(len(game.jeu.list_player)):
@@ -147,9 +183,27 @@ def traiter_formulaire():
                 l_inter_arr = game.grid.np.array(l_inter)
                 indice = game.grid.np.argmin(l_inter_arr)
                 game.jeu.list_player[indice].points = 'Eliminate'
+                game.jeu.list_player[indice].block()
+                message += 'Très beau Slam ! On perd malheureusement le joueur '+ str(indice) + " Entrer SUITE pour passer à la manche suivante"
+                game.jeu.isSomeoneSlam()
+                game.jeu.InverseEndTurn()
+
+            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
+
+        elif game.jeu.EndTurn :
+            champ_texte = request.form['champ_texte']
+            if champ_texte == "SUITE" :
+                game.jeu.InverseEndTurn()
                 game.jeu.load_turn()
-                message += ' ' + game.jeu.turn_set(game.questions)
-            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2, score1=score1, score2=score2, score3=score3)
+                message = game.jeu.turn_set(game.questions)
+            else :
+                message = "Entrer SUITE pour passer à la manche suivante"
+            message2 = game.jeu.grid.display_shown_site()
+            score1 = game.jeu.list_player[0].points
+            score2 = game.jeu.list_player[1].points
+            score3 = game.jeu.list_player[2].points
+            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
+
 
 
         else :

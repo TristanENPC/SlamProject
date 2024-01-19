@@ -66,6 +66,7 @@ class Grid:
             self._size, None
         )  # Array representing the grid shown to players
         self._words = []
+        self._words_discovered = []
         self._letters = []
 
     @property
@@ -83,6 +84,14 @@ class Grid:
     @property
     def words(self):
         return self._words
+
+    @property
+    def words_discovered(self):
+        return self._words_discovered
+
+    @words_discovered.setter
+    def words_discovered(self,v):
+        self._words_discovered = v
 
     @property
     def letters(self):

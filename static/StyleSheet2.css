@@ -3,16 +3,10 @@ header {
     margin : 0em;
 }
 
-#logo {
-    height : 5em;
-    width : 5em;
-    padding : 1em;
-}
-
 #logo2 {
-    height : 6em;
-    width : 5em;
-    padding : 1em;
+    height : 12em;
+    width : 10em;
+    padding : 3em;
 }
 
 #message {
@@ -24,12 +18,13 @@ header {
     border-radius: 10px; /* Add border-radius for rounded corners */
 }
 
-
 body {
-    background-image: url('../static/bg.png');
+    background-image: url('../static/cyril_detourre1.png');
     background-repeat: no-repeat;
-    background-size: cover
+    background-size: cover;
+    position: relative; /* Permet d'ajouter des éléments positionnés par rapport à celui-ci */
 }
+
 
 #logo_min {
     height : 1.5em;

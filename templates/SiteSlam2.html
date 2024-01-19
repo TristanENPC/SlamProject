@@ -8,33 +8,36 @@
     </head>
     <body>
         <header>
-            <img id="logo" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">
-            <img id="logo2" src="../static/PontsLogo.png" alt="Logo de l'ecole des Ponts" title="Logo Ponts">
-        </header>
+            <div id="logo-container">
+               <img id="logo" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">
+               <img id="logo2" src="../static/PontsLogo.png" alt="Logo de l'école des Ponts" title="Logo Ponts">
+            </div>
+         </header>         
         <nav class="container_nav">
             <div class="score">Joueur 0 : {{ score1 | safe }}</div>
             <div class="score">Joueur 1 : {{ score2 | safe }}</div>
             <div class="score">Joueur 2 : {{ score3 | safe }}</div>
         </nav>
-        <main>
+        <main>      
             <div class="container_main">
-                <button id="test" onclick="envoyerBuzz()">BUZZ</button>
+                <button id="buzz" onclick="envoyerBuzz()">BUZZ</button>
                 <form action="/traiter_formulaire" method="post">
                     <label for="champ_texte">Réponse :</label>
                     <input type="text" id="champ_texte" name="champ_texte" required>
                     <button type="submit">Soumettre</button>
                 </form>
                 <p>{% raw %}{% endraw %}</p>    
-            </div>
-                                       
-            <div id="message">{{ message | safe }}</div>
-            <div id="message2" class="container_grid">{{ message2 | safe }}</div>       
-            <div id="message3">{{ message3 | safe }}</div> 
+            </div>       
+            <div class="container_message">
+                <div id="message">{{ message | safe }}</div>
+            </div>                               
+            <div class="container_message2">
+                <div id="message2" class="container_grid">{{ message2 | safe }}</div>
+            </div>          
         </main>
         <footer class="container_footer">
-            
             <img id="logo_min" src="../static/SlamLogo.png" alt="Logo du jeu Slam" title="Logo Slam">
             <a href="https://www.france.tv/france-3/slam/">Site officiel</a>
-        </footer>
+        </footer>         
     </body>
 </html>

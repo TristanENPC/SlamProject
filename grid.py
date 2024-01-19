@@ -157,12 +157,12 @@ class Grid:
         '''
         res = '<div class="grid">'
         line_string = ''
-        n,m = self.shown_table.shape
+        n, m = self.shown_table.shape
         G = np.full((n+2,m+2),None)
         G[1:n+1,1:m+1] = self.shown_table
 
         for i in range(len(self.words)):
-            if self.words[i].is_horizontal :
+            if self.words[i].is_horizontal:
                 G[self.words[i].first_letter_position[0]+1,self.words[i].first_letter_position[1]] = str(i)
             else :
                 G[self.words[i].first_letter_position[0],self.words[i].first_letter_position[1]+1] = str(i)
@@ -171,12 +171,12 @@ class Grid:
         for i in range(n + 2):
             res += '<div id="game-grid" class="grid">'
             for j in range(m + 2):
-                cell_content = '•' if G[i, j] is None else str(G[i, j])
-                if G[i,j] is None :
+                cell_content = ' ' if G[i, j] is None else str(G[i, j])
+                if G[i, j] is None :
                     cell_class = 'empty-cell'
                 elif str(G[i, j]).isdigit() :
                     cell_class = 'digit-cell'
-                else :
+                else:
                     cell_class = 'word-cell'
                 res += f'<div class="{cell_class}">{cell_content}</div>'
             res += '</div>'

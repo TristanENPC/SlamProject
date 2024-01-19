@@ -18,10 +18,12 @@ header {
 #message {
     display: inline-block;
     background-color: white;
-    padding: 5px;
-    margin: 5px;
+    padding: 10px;
     text-align: center;
+    border: 5px solid blue; /* 2px blue border */
+    border-radius: 10px; /* Add border-radius for rounded corners */
 }
+
 
 body {
     background-image: url('../static/bg.png');
@@ -36,7 +38,7 @@ body {
 }
 
 
-#test {
+#buzz {
     width: 10em;
     height: 3em;
     background-color: #4CAF50;
@@ -45,24 +47,33 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 1em;
 }
 
-#test:hover {
+#buzz:hover {
     background-color: #45a049;
 }
-
 
 .container_nav {
     display : flex;
     background-color: lightblue ;
     flex-direction : row;
-    justify-content: center;
     border : 0.1em rgb(0,0,0) solid;
     padding-top : 0.5em;
     padding-bottom : 0.5em;
     justify-content: space-around;
     width : 55em;
     margin : auto;
+    margin-bottom: 1em;
+    border-radius: 10px;
+}
+
+.container_message {
+    flex-direction : row;
+    justify-content: space-around;
+    margin : auto;
+    margin-top: 1em;
+    text-align: center;
 }
 
 .container_main {
@@ -70,12 +81,23 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.container_message2 {
+    flex-direction : column;
+    justify-content: center;
+    margin : auto;
+    margin-top: 1em;
+    text-align: center;
+    align-items: center;
+    padding-left: 519px;
 }
 
 .container_grid {
-    text-align: center; /* Centrage horizontal */
-    padding-left: 570px; /* Ajustez la marge à gauche selon vos besoins */
-    
+    margin: 0 auto; /* Ajoutez cette ligne pour centrer la grille horizontalement */
+    text-align: center; /* Vous pouvez supprimer ou conserver cette ligne selon vos besoins */
 }
 
 .container_footer{
@@ -85,6 +107,7 @@ body {
     border-top : 0.1em rgb(253, 249, 150);
     align-items: center;
     padding-top : 0.5em;
+    text-align: center;
 }
 
 .bouton {
@@ -100,8 +123,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); /* Ajustez la largeur minimale et la fraction de largeur au besoin */
     gap: 2px;
-    justify-content: center;
-    gap : 0px;
+    margin: auto;
 }
 
 .empty-cell, .digit-cell, .word-cell {

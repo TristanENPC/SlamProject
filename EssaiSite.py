@@ -34,7 +34,7 @@ def executer_fonction_python_start():
 def base():
     message = game.jeu.current_question.title
     message2 = game.jeu.grid.display_shown_site()
-    return render_template('SiteSlam2.html',message=message,message2=message2)
+    return render_template('SiteSlam2.html', message=message, message2=message2)
 
 
 @app.route('/traiter_formulaire', methods=['POST'])
@@ -67,9 +67,10 @@ def traiter_formulaire():
             game.jeu.list_player[indice].points = 'Eliminate'
             game.jeu.list_player[indice].block()
 
-        if game.jeu.is_choosing_player :
-            try :
+        if game.jeu.is_choosing_player:
+            try:
                 champ_texte = request.form['champ_texte']
+
                 if int(champ_texte) < len(game.jeu.list_player):
                     game.jeu.player_is_playing = int(champ_texte)
 
@@ -94,24 +95,24 @@ def traiter_formulaire():
 
             return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message,message2=message2,score1=score1,score2=score2,score3=score3)
 
-        elif game.jeu.is_guessing_letter :
+        elif game.jeu.is_guessing_letter:
             champ_texte = request.form['champ_texte']
             game.jeu.guessed_letter = champ_texte
-            message, logic, message2 = game.jeu.turn()[1],game.jeu.turn()[0],game.jeu.turn()[2]
+            message, logic, message2 = game.jeu.turn()[1],game.jeu.turn()[0], game.jeu.turn()[2]
             score1 = game.jeu.list_player[0].points
             score2 = game.jeu.list_player[1].points
             score3 = game.jeu.list_player[2].points
-            if logic :
+            if logic:
                 game.jeu.end_choosing_word()
                 game.jeu.guess_letter()
-            else :
+            else:
                 if message == "Aucun joueur n'a trouvé la lettre. \n Elle ne pourra donc plus être trouvée. Le tour est terminé." :
                     message = "Personne n'a trouvé, prochaine question : "+game.jeu.turn_set(game.questions)
                 game.jeu.guess_letter()
 
-            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
+            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2, score1=score1, score2=score2, score3=score3)
 
-        elif game.jeu.is_choosing_word :
+        elif game.jeu.is_choosing_word:
             score1 = game.jeu.list_player[0].points
             score2 = game.jeu.list_player[1].points
             score3 = game.jeu.list_player[2].points
@@ -122,7 +123,7 @@ def traiter_formulaire():
             if message != "Veuillez entrer un choix de mot valide." and message != "Vous ne pouvez pas deviner ce mot":
                 game.jeu.guess_word()
                 game.jeu.end_choosing_word()
-            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
+            return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2, score1=score1, score2=score2, core3=score3)
 
         elif game.jeu.is_guessing_word :
             champ_texte = request.form['champ_texte']
@@ -158,6 +159,7 @@ def traiter_formulaire():
 
             return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2, score1=score1,score2=score2,score3=score3)
 
+
         elif game.jeu.isSomeoneSlaming :
 
             champ_texte = request.form['champ_texte']
@@ -166,6 +168,7 @@ def traiter_formulaire():
             except ValueError :
                 message = "Veuillez entrer la réponse sous le format 0reponse"
             message2 = game.jeu.grid.display_shown_site()
+
             if message == 'perdu' :
                 game.jeu.list_player[0].points = 0
                 game.jeu.list_player[1].points = 0
@@ -217,6 +220,7 @@ def traiter_formulaire():
             score2 = game.jeu.list_player[1].points
             score3 = game.jeu.list_player[2].points
             return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
+
 
 
         else :

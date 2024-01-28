@@ -4,7 +4,7 @@ function envoyerRequete() {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            // Mettez à jour le contenu de la grille avec la réponse reçue du serveur
+            // Update the content of the grid with the response received from the server
             document.getElementById('message').innerHTML = xhr.responseText;
         }
     };
@@ -38,3 +38,4 @@ function envoyerBuzz() {
 
     xhr.send();
 }
+

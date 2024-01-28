@@ -16,6 +16,7 @@ class Word:
         self._length = len(name0)
         self._first_letter_position = (0, 0)
 
+
     @property
     def name(self):
         return self._name
@@ -68,6 +69,17 @@ class Grid:
         self._words = []
         self._words_discovered = []
         self._letters = []
+        self._letters_used = []
+
+
+
+    @property
+    def letters_used(self):
+        return self._letters_used
+
+    @letters_used.setter
+    def letters_used(self,v):
+        self._letters_used = v
 
     @property
     def size(self):
@@ -100,6 +112,7 @@ class Grid:
     @letters.setter
     def letters(self,v):
         self._letters = v
+
 
     def give_grid(self, G):
         self._table = G
@@ -154,7 +167,7 @@ class Grid:
         for i in range(n + 2):
             res += '<div id="game-grid" class="grid">'
             for j in range(m + 2):
-                cell_content = '•' if G[i, j] is None else str(G[i, j])
+                cell_content = ' ' if G[i, j] is None else str(G[i, j])
                 cell_class = 'empty-cell' if G[i, j] is None else 'word-cell'
                 res += f'<div class="{cell_class}">{cell_content}</div>'
             res += '</div>'
@@ -180,7 +193,7 @@ class Grid:
         for i in range(n + 2):
             res += '<div id="game-grid" class="grid">'
             for j in range(m + 2):
-                cell_content = '•' if G[i, j] is None else str(G[i, j])
+                cell_content = ' ' if G[i, j] is None else str(G[i, j])
                 if G[i,j] is None :
                     cell_class = 'empty-cell'
                 elif str(G[i, j]).isdigit() :

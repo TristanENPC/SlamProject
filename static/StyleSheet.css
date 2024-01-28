@@ -15,10 +15,12 @@ header {
     padding : 1em;
 }
 
-
 body {
-    /*background-image: url('bg.png');*/
-    background-color: rgb(253, 249, 150);
+    background-image: url('nv_fond.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative; /* Permet d'ajouter des éléments positionnés par rapport à celui-ci */
+    /*background-color: rgb(183, 202, 218);*/
 }
 
 #logo_min {
@@ -39,13 +41,14 @@ body {
     justify-content: space-around;
     width : 55em;
     margin : auto;
+    border-radius: 10px;
 }
 
 .container_footer{
     display: flex;
     flex-direction : row;
     justify-content: center;
-    border-top : 0.1em rgb(253, 249, 150);
+    /*border-top : 0.1em rgb(253, 249, 150);*/
     align-items: center;
     padding-top : 0.5em;
 }
@@ -68,7 +71,7 @@ body {
     text-align: center;
 }
 
-#test {
+#buzz {
     width: 10em;
     height: 3em;
     background-color: #4CAF50;
@@ -79,17 +82,25 @@ body {
     cursor: pointer;
 }
 
-#test:hover {
+#buzz:hover {
     background-color: #45a049;
 }
 
 .container_text {
+    display: inline-block;
+    background-color: rgba(49, 122, 240, 0.525);
+    padding: 30px;
     margin-top: 20px;
+    margin-left: 3.6em;
     font-size: 18px;
     line-height: 1.6;
     font-family: 'Arial', sans-serif;
     color: black;
+    text-align: center;
+    border: 5px solid black; /* 2px black border */
+    border-radius: 10px; /* Add border-radius for rounded corners */
 }
+
 
 .container_text br {
     display: block;

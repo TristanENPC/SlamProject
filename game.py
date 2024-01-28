@@ -90,6 +90,15 @@ class Game:
         self._isSomeoneSlaming = False
         self._SomeoneBuzzed = False
         self._EndTurn = False
+        self._NumTurn = 1
+        
+    @property
+    def NumTurn(self):
+        return self._NumTurn
+        
+    @NumTurn.setter
+    def NumTurn(self,v):
+        self._NumTurn = v
         
     @property
     def EndTurn(self):
@@ -253,6 +262,7 @@ class Game:
             grid_generated = G.generate(words)
             G.full_shown_table()
         jeu.pull_grid(G)
+        self.grid.letters_used = []
             
     def turn_set(self, list_questions):
         self.turn_losers = []
@@ -306,7 +316,7 @@ class Game:
         assert type(word_to_guess) == int
         if letter not in self.grid.words[word_to_guess].name or word_to_guess in self.grid.words_discovered:
             return ("Vous ne pouvez pas deviner ce mot")
-        return("Voici la défintition du mot que vous souhaitez deviner : "+self.grid.words[word_to_guess].definition+" Vous avez 20 secondes pour répondre un mot.")
+        return("Voici la défintition du mot que vous souhaitez deviner : "+self.grid.words[word_to_guess].definition)
         
     def turn_3(self):
         answer = self.guessed_word
@@ -342,8 +352,7 @@ class Game:
             )
             if ori[i] == "v":
                 self.grid.words[i].change_orientation()
-        self.grid.pull_letters()        
-        # [A CHANGER] Il faut demander les lettres à l'utilisateur, pour l'instant ça choisit les 6 premières de la liste des lettres
+        self.grid.pull_letters()
         given_letters = self.grid.letters[:6]
         
         # On charge la grille de la finale à montrer au joueur

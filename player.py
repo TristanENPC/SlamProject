@@ -22,10 +22,10 @@ class Player:
         self._points = v
 
     def block(self):
-        self._is_blocked = False
+        self._is_blocked = True
 
     def unblock(self):
-        self._is_blocked = True
+        self._is_blocked = False
 
 
 class HumanPlayer(Player):

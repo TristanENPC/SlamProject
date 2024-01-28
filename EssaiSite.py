@@ -159,10 +159,9 @@ def traiter_formulaire():
 
             return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2, score1=score1,score2=score2,score3=score3)
 
-        elif game.jeu.isSomeoneSlaming:
-            score1 = game.jeu.list_player[0].points
-            score2 = game.jeu.list_player[1].points
-            score3 = game.jeu.list_player[2].points
+
+        elif game.jeu.isSomeoneSlaming :
+
             champ_texte = request.form['champ_texte']
             try :
                 message = game.jeu.check_slam(game.jeu.player_is_playing,int(champ_texte[0]),champ_texte[1:])
@@ -170,13 +169,20 @@ def traiter_formulaire():
                 message = "Veuillez entrer la réponse sous le format 0reponse"
             message2 = game.jeu.grid.display_shown_site()
 
-            if message == 'perdu':
+            if message == 'perdu' :
+                game.jeu.list_player[0].points = 0
+                game.jeu.list_player[1].points = 0
+                game.jeu.list_player[2].points = 0
                 game.jeu.list_player[game.jeu.player_is_playing].points = 'Eliminate'
                 game.jeu.list_player[game.jeu.player_is_playing].block()
-                game.jeu.InverseEndTurn()
                 game.jeu.isSomeoneSlam()
-                message += "On perd malheureusement le joueur "+str(game.jeu.player_is_playing) + " Entrer SUITE pour passer à la manche suivante"
+                game.jeu.InverseEndTurn()
+                message = "On perd malheureusement le joueur "+str(game.jeu.player_is_playing) + ". Entrer SUITE pour passer à la manche suivante"
+
             elif game.jeu.grid.comparate_grids() :
+                game.jeu.list_player[0].points = 0
+                game.jeu.list_player[1].points = 0
+                game.jeu.list_player[2].points = 0
                 l_inter = []
                 for i in range(len(game.jeu.list_player)):
                     l_inter.append(game.jeu.list_player[i].points)
@@ -188,14 +194,25 @@ def traiter_formulaire():
                 game.jeu.isSomeoneSlam()
                 game.jeu.InverseEndTurn()
 
+            score1 = game.jeu.list_player[0].points
+            score2 = game.jeu.list_player[1].points
+            score3 = game.jeu.list_player[2].points
+
             return render_template('SiteSlam2.html', champ_texte=champ_texte, message=message, message2=message2,score1=score1,score2=score2,score3=score3)
 
         elif game.jeu.EndTurn :
             champ_texte = request.form['champ_texte']
             if champ_texte == "SUITE" :
-                game.jeu.InverseEndTurn()
-                game.jeu.load_turn()
-                message = game.jeu.turn_set(game.questions)
+                game.jeu.NumTurn = game.jeu.NumTurn+1
+                if game.jeu.NumTurn == 2 :
+                    game.jeu.InverseEndTurn()
+                    game.jeu.load_turn()
+                    message = game.jeu.turn_set(game.questions)
+                else :
+                    game.jeu.InverseEndTurn()
+                    game.jeu.load_final()
+                    game.jeu.become_final()
+                    message = 'Trouvez les mots dans la grille. Utilisez le format : 0reponse'
             else :
                 message = "Entrer SUITE pour passer à la manche suivante"
             message2 = game.jeu.grid.display_shown_site()
